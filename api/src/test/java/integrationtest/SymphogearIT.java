@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.core.MediaType;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
 public class SymphogearIT {
 
@@ -34,12 +36,12 @@ public class SymphogearIT {
            .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)
-            .body("investment", equalTo("hoge"))
-            .body("collection_ball", equalTo("hoge"))
-            .body("collection_yen", equalTo("hoge"))
-            .body("balance_result", equalTo("hoge"))
-            .body("first_hit", equalTo("hoge"))
-            .body("continuous_hit_count", equalTo("hoge"))
-            .body("round_allocations", equalTo("hoge"));
+            .body("investment_yen", matchesPattern("[1-9][0-9]*"))
+            .body("collection_ball", matchesPattern("[1-9][0-9]*"))
+            .body("collection_yen", matchesPattern("[1-9][0-9]*"))
+            .body("balance_result_yen", matchesPattern("[1-9][0-9]*"))
+            .body("first_hit", matchesPattern("[1-9][0-9]*"))
+            .body("continuous_hit_count", matchesPattern("[1-9][0-9]*"))
+            .body("round_allocations", hasSize(greaterThan(0))); // https://stackoverflow.com/questions/28039981/rest-assured-how-to-check-if-not-empty-array-is-returned
   }
 }
