@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
-public class SymphogearIT {
+class SymphogearIT {
 
   @BeforeAll
   static void beforeAll() {
@@ -32,7 +32,7 @@ public class SymphogearIT {
     given().when()
             .contentType(MediaType.APPLICATION_JSON)
             .body(jsonObj.toString())
-            .post("/symphogear/balance/1")
+            .post("v1/symphogear/balance/1")
            .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)
