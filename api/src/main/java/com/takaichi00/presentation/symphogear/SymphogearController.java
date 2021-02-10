@@ -1,6 +1,5 @@
-package com.takaichi00.presentation;
+package com.takaichi00.presentation.symphogear;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +12,7 @@ public class SymphogearController {
   @POST
   @Path("/balance/{count}")
   @Produces(MediaType.APPLICATION_JSON)
-  public String searchBook(@PathParam Integer count) {
-    return "ok";
+  public SymphogearResultResponse balance(@PathParam Integer count) {
+    return null;
   }
 }
