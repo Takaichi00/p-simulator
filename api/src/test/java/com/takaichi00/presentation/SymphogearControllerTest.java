@@ -1,16 +1,13 @@
 package com.takaichi00.presentation;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+
 import io.quarkus.test.junit.QuarkusTest;
+import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.MediaType;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
 @QuarkusTest
 class SymphogearControllerTest {
