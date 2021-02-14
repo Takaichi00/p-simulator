@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SymphogearResultResponse {
   @JsonbProperty(value = "investment_yen")
-  private Integer investmentYen;
+  private String investmentYen;
 
   @JsonbProperty(value = "collection_ball")
   private Integer collectionBall;

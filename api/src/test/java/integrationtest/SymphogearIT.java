@@ -7,10 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
 
+import java.util.regex.Pattern;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.text.MatchesPattern.matchesPattern;
+import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.matchesRegex;
 
 class SymphogearIT {
 
@@ -37,7 +40,7 @@ class SymphogearIT {
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)
             .body("investment_yen", matchesPattern("[1-9][0-9]*"))
-            .body("collection_ball", matchesPattern("[1-9][0-9]*"))
+            .body("collection_ball", matchesPattern(Pattern.compile("[1-9][0-9]*")))
             .body("collection_yen", matchesPattern("[1-9][0-9]*"))
             .body("balance_result_yen", matchesPattern("[1-9][0-9]*"))
             .body("first_hit", matchesPattern("[1-9][0-9]*"))

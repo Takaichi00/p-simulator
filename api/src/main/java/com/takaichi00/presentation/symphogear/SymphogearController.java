@@ -5,7 +5,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
@@ -20,7 +19,7 @@ public class SymphogearController {
   public Response balance(SymphogearRequest symphogearRequest, @PathParam Integer count) {
     SymphogearResultResponse response =
         SymphogearResultResponse.builder()
-                                .investmentYen(5000)
+                                .investmentYen("5000")
                                 .collectionBall(2000)
                                 .collectionYen(7200)
                                 .balanceResultYen(2200)
