@@ -19,7 +19,7 @@ public class SymphogearController {
   public Response balance(SymphogearRequest symphogearRequest, @PathParam Integer count) {
     SymphogearResultResponse response =
         SymphogearResultResponse.builder()
-                                .investmentYen("5000")
+                                .investmentYen(5000)
                                 .collectionBall(2000)
                                 .collectionYen(7200)
                                 .balanceResultYen(2200)

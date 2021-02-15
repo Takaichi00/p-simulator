@@ -1,12 +1,11 @@
 package com.takaichi00.presentation.symphogear;
 
+import java.util.List;
+import javax.json.bind.annotation.JsonbProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.json.bind.annotation.JsonbProperty;
-import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SymphogearResultResponse {
   @JsonbProperty(value = "investment_yen")
-  private String investmentYen;
+  private Integer investmentYen;
 
   @JsonbProperty(value = "collection_ball")
   private Integer collectionBall;

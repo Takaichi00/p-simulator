@@ -7,13 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
 
-import java.util.regex.Pattern;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.matchesPattern;
-import static org.hamcrest.Matchers.matchesRegex;
+import static org.hamcrest.Matchers.is;
 
 class SymphogearIT {
 
@@ -32,6 +29,7 @@ class SymphogearIT {
                               .put("ball_reduction_rate",0.05);
 
 
+    // TODO want to control random integer.
     given().when()
             .contentType(MediaType.APPLICATION_JSON)
             .body(jsonObj.toString())
@@ -39,12 +37,12 @@ class SymphogearIT {
            .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)
-            .body("investment_yen", matchesPattern("[1-9][0-9]*"))
-            .body("collection_ball", matchesPattern(Pattern.compile("[1-9][0-9]*")))
-            .body("collection_yen", matchesPattern("[1-9][0-9]*"))
-            .body("balance_result_yen", matchesPattern("[1-9][0-9]*"))
-            .body("first_hit", matchesPattern("[1-9][0-9]*"))
-            .body("continuous_hit_count", matchesPattern("[1-9][0-9]*"))
+            .body("investment_yen", is(greaterThan(0)))
+            .body("collection_ball", is(greaterThan(0)))
+            .body("collection_yen", is(greaterThan(0)))
+            .body("balance_result_yen", is(greaterThan(Integer.MIN_VALUE)))
+            .body("first_hit", is(greaterThan(0)))
+            .body("continuous_hit_count", is(greaterThan(0)))
             .body("round_allocations", hasSize(greaterThan(0))); // https://stackoverflow.com/questions/28039981/rest-assured-how-to-check-if-not-empty-array-is-returned
   }
 }
