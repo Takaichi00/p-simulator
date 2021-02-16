@@ -1,6 +1,7 @@
 package com.takaichi00.presentation.symphogear;
 
-import java.util.Arrays;
+import com.takaichi00.application.symphogear.HitResultModel;
+import com.takaichi00.application.symphogear.SymphogearService;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -8,8 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.takaichi00.application.symphogear.SymphogearService;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/v1/symphogear")
@@ -24,7 +23,7 @@ public class SymphogearController {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response balance(SymphogearRequest symphogearRequest, @PathParam Integer count) {
 
-    symphogearService.getHitInformation();
+    HitResultModel hitResultModel = symphogearService.getHitInformation();
 
     SymphogearResultResponse response =
         SymphogearResultResponse.builder()
@@ -32,9 +31,9 @@ public class SymphogearController {
                                 .collectionBall(2000)
                                 .collectionYen(7200)
                                 .balanceResultYen(2200)
-                                .firstHit(100)
-                                .continuousHitCount(3)
-                                .roundAllocations(Arrays.asList("4R", "10R", "10R"))
+                                .firstHit(hitResultModel.getFirstHit())
+                                .continuousHitCount(hitResultModel.getContinuousHitCount())
+                                .roundAllocations(hitResultModel.getRoundAllocations())
                                 .build();
     return Response.ok(response).build();
   }
