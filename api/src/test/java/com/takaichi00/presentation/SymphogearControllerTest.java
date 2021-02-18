@@ -32,6 +32,10 @@ class SymphogearControllerTest {
                             .put("ball_reduction_rate",0.05);
 
     HitResultModel hitResultModel = HitResultModel.builder()
+                                                  .investmentYen(5000)
+                                                  .collectionBall(2000)
+                                                  .collectionYen(7200)
+                                                  .balanceResultYen(2200)
                                                   .firstHit(100)
                                                   .continuousHitCount(3)
                                                   .roundAllocations(Arrays.asList("4R", "10R", "10R"))
