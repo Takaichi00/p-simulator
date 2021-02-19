@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
+import com.takaichi00.application.symphogear.HitInputModel;
 import com.takaichi00.application.symphogear.HitResultModel;
 import com.takaichi00.application.symphogear.SymphogearService;
 import io.quarkus.test.junit.QuarkusTest;
@@ -14,8 +15,8 @@ import javax.ws.rs.core.MediaType;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @QuarkusTest
@@ -41,7 +42,13 @@ class SymphogearControllerTest {
                                                   .roundAllocations(Arrays.asList("4R", "10R", "10R"))
                                                   .build();
 
-    when(symphogearService.getHitInformation()).thenReturn(hitResultModel);
+    HitInputModel hitInputModel = HitInputModel.builder()
+                                               .rotationRatePer1000yen(20)
+                                               .changeRate(BigDecimal.valueOf(3.6))
+                                               .ballReductionRate(BigDecimal.valueOf(0.05))
+                                               .build();
+
+    when(symphogearService.getHitInformation(hitInputModel)).thenReturn(hitResultModel);
 
     given().when()
             .contentType(MediaType.APPLICATION_JSON)
@@ -60,7 +67,7 @@ class SymphogearControllerTest {
             .body("round_allocations[1]", equalTo("10R"))
             .body("round_allocations[1]", equalTo("10R"));
 
-    verify(symphogearService, times(1)).getHitInformation();
+    verify(symphogearService, times(1)).getHitInformation(hitInputModel);
 
   }
 

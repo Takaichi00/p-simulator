@@ -1,5 +1,6 @@
 package com.takaichi00.presentation.symphogear;
 
+import com.takaichi00.application.symphogear.HitInputModel;
 import com.takaichi00.application.symphogear.HitResultModel;
 import com.takaichi00.application.symphogear.SymphogearService;
 import javax.inject.Inject;
@@ -22,8 +23,14 @@ public class SymphogearController {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public Response balance(SymphogearRequest symphogearRequest, @PathParam Integer count) {
+    HitInputModel hitInputModel
+          = HitInputModel.builder()
+                    .rotationRatePer1000yen(symphogearRequest.getRotationRatePer1000yen())
+                    .changeRate(symphogearRequest.getChangeRate())
+                    .ballReductionRate(symphogearRequest.getBallReductionRate())
+                    .build();
 
-    HitResultModel hitResultModel = symphogearService.getHitInformation();
+    HitResultModel hitResultModel = symphogearService.getHitInformation(hitInputModel);
 
     SymphogearResultResponse response =
         SymphogearResultResponse.builder()

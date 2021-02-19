@@ -14,7 +14,7 @@ public class SymphogearRequest {
   private Integer rotationRatePer1000yen;
 
   @JsonbProperty("change_rate")
-  private BigDecimal change_rate;
+  private BigDecimal changeRate;
 
   @JsonbProperty("ball_reduction_rate")
   private BigDecimal ballReductionRate;

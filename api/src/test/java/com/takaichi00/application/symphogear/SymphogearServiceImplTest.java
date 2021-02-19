@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 class SymphogearServiceImplTest {
@@ -37,8 +38,13 @@ class SymphogearServiceImplTest {
                                             .continuousHitCount(3)
                                             .roundAllocations(Arrays.asList("4R", "10R", "10R"))
                                             .build();
+    HitInputModel hitInputModel = HitInputModel.builder()
+                                               .rotationRatePer1000yen(20)
+                                               .changeRate(BigDecimal.valueOf(3.6))
+                                               .ballReductionRate(BigDecimal.valueOf(0.05))
+                                               .build();
 
-    HitResultModel actual = testTarget.getHitInformation();
+    HitResultModel actual = testTarget.getHitInformation(hitInputModel);
 
     assertEquals(excected, actual);
   }
