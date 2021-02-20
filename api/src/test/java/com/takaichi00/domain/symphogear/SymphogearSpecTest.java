@@ -1,44 +1,25 @@
 package com.takaichi00.domain.symphogear;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SymphogearSpecTest {
 
+  @Test
+  @DisplayName("1回抽選して 1/199.8 を引き当てなかった場合はハズレが取得できる")
+  void _1回抽選してxxxを引き当てなかった場合はハズレが取得できる() {
+    // setup
+    Boolean expected = false;
+    SymphogearSpec testTarget = new SymphogearSpec();
+
+    // execute
+    Boolean actual = testTarget.drawLots();
+
+    // assert
+    assertEquals(expected, actual);
+  }
+
 }
 
-/*
-* TODO List
-*  // 通常時
-* ゲームは通常時から開始される
-* 通常時は 1/199.8 の確率で大当たりが発生する
-* 通常時は大当たりが発生するまで抽選を繰り返す
-*
-* 大当たりが発生すると 99/100 の確率で 3R (390の出玉)を取得できる
-*   その後最終決戦に突入する
-* 大当たりが発生すると 1/100 の確率で 10R (1300の出玉) を取得できる
-*   その後シンフォギアチャンス GX に突入する
-*
-* // 最終決戦
-* 最終決戦では 1/7.6 の確率で大当たりが発生する。最大5回抽選できる (1-((1 - 1/7.6)^5))
-* 最終決戦で大当たりが発生すると、シンフォギアチャンス GX に突入する
-* 最終決戦で大当たりが発生しないと、通常時に戻る
-*
-* // シンフォギアチャンス GX
-* 最終決戦からシンフォギアチャンス GX に移行した際は、以下の確率でラウンドと時短回数が決定される
-*
-* ラウンド/時短回数/比率
-* 10R/99回転/11%
-* 10R/11回転/3%
-* 10R/7回転/36%
-* 7R/7回転/2%
-* 6R/7回転/3%
-* 4R/7回転/45%
-* 10R=1300, 7R=910, 6R=780, 4R=520
-*
-* ラウンドが消化されると、↑ で決定された回数分抽選を実施することができる。
-* ここでは 1/7.6 の確率で大当たりする。
-*
-* 大当りが発生すると、最初のフローに戻る
-* 発生しないと終了
-*
-* */
