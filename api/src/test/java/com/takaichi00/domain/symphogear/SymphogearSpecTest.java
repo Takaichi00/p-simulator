@@ -12,7 +12,7 @@ class SymphogearSpecTest {
   void _1回抽選してxxxを引き当てなかった場合はハズレが取得できる() {
     // setup
     Boolean expected = false;
-    SymphogearSpec testTarget = new SymphogearSpec();
+    SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator());
 
     // execute
     Boolean actual = testTarget.drawLots();
@@ -20,6 +20,5 @@ class SymphogearSpecTest {
     // assert
     assertEquals(expected, actual);
   }
-
 }
 
