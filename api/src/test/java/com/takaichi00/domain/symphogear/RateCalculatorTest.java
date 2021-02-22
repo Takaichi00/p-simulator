@@ -2,7 +2,6 @@ package com.takaichi00.domain.symphogear;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 class RateCalculatorTest {
@@ -51,16 +50,3 @@ class RateCalculatorTest {
   }
 }
 
-class CustomRandom extends Random {
-
-  private int returnInteger;
-
-  CustomRandom(int returnInteger) {
-    this.returnInteger = returnInteger;
-  }
-
-  @Override
-  public int nextInt(int bits) {
-    return returnInteger;
-  }
-}
