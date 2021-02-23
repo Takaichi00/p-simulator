@@ -12,4 +12,8 @@ public class SymphogearSpec {
   public Boolean drawLots() {
     return rateCalculator.calcurate(NUMERATOR_SYMPHO_NORMAL, DENOMINATOR_SYMPHO_NORMAL);
   }
+
+  public int getHitRoundCount() {
+    return 390;
+  }
 }

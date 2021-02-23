@@ -36,5 +36,16 @@ class SymphogearSpecTest {
     // assert
     assertEquals(expected, actual);
   }
-  
+
+  @Test
+  @DisplayName("大当たりが発生すると 99/100 の確率で 3R (390の出玉)を取得できる")
+  void 大当たりが発生するとxxxの確率で3Rを取得できる() {
+    SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
+      new CustomRandom(9)));
+
+    int expected = 390;
+    int actual = testTarget.getHitRoundCount();
+    assertEquals(expected, actual);
+  }
+
 }
