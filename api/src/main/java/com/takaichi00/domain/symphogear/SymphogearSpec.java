@@ -11,6 +11,14 @@ public class SymphogearSpec {
   private static final int ROUND_COUNT_3R = 390;
   private static final int ROUND_COUNT_10R = 1300;
 
+  private SymphogearModeStatus symphogearModeStatus;
+
+
+  SymphogearSpec(RateCalculator rateCalculator) {
+    this.rateCalculator = rateCalculator;
+    symphogearModeStatus = SymphogearModeStatus.NORMAL;
+  }
+
   public Boolean drawLots() {
     return rateCalculator.calcurate(NUMERATOR_SYMPHO_NORMAL, DENOMINATOR_SYMPHO_NORMAL);
   }
@@ -19,6 +27,11 @@ public class SymphogearSpec {
     if (rateCalculator.calcurate(1, 100)) {
       return ROUND_COUNT_10R;
     }
+    symphogearModeStatus = SymphogearModeStatus.LAST_BUTTLE;
     return ROUND_COUNT_3R;
+  }
+
+  public SymphogearModeStatus getModeStatus() {
+    return symphogearModeStatus;
   }
 }
