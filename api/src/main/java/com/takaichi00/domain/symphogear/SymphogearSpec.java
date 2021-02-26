@@ -2,7 +2,6 @@ package com.takaichi00.domain.symphogear;
 
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class SymphogearSpec {
 
   private final RateCalculator rateCalculator;
@@ -13,6 +12,9 @@ public class SymphogearSpec {
 
   private SymphogearModeStatus symphogearModeStatus;
 
+  SymphogearSpec() {
+    rateCalculator = new RateCalculator();
+  }
 
   SymphogearSpec(RateCalculator rateCalculator) {
     this.rateCalculator = rateCalculator;
@@ -33,5 +35,9 @@ public class SymphogearSpec {
 
   public SymphogearModeStatus getModeStatus() {
     return symphogearModeStatus;
+  }
+
+  public SymphogearModeStatus lastBattle() {
+    return SymphogearModeStatus.CHANCE_GX;
   }
 }

@@ -10,7 +10,7 @@ class SymphogearSpecTest {
 
   @DisplayName("通常時")
   @Nested
-  class normal {
+  class Normal {
     @Test
     @DisplayName("1回抽選して 1/199.8 を引き当てなかった場合はハズレが取得できる")
     void _1回抽選してxxxを引き当てなかった場合はハズレが取得できる() {
@@ -68,4 +68,21 @@ class SymphogearSpecTest {
       assertEquals(expectedModeStatus, actualModeStatus);
     }
   }
+
+  @Nested
+  @DisplayName("最終決戦")
+  class LastBattle {
+
+    @Test
+    @DisplayName("1/7.6 の確率を5回抽選し、もし1回以上大当りが獲得できたらシンフォギアチャンス GX に突入する")
+    void xxxの確率を5回抽選しもし1回以上大当りが獲得できたらシンフォギアチャンスGXに突入する() {
+      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
+        new CustomRandom(1)));
+
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
+      SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
+      assertEquals(expectedModeStatus, actualModeStatus);
+    }
+  }
+
 }
