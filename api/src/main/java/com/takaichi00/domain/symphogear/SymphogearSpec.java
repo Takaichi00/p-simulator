@@ -38,6 +38,11 @@ public class SymphogearSpec {
   }
 
   public SymphogearModeStatus lastBattle() {
-    return SymphogearModeStatus.CHANCE_GX;
+    for (int i = 0; i < 5; ++i) {
+      if (rateCalculator.calcurate(10, 76)) {
+        return SymphogearModeStatus.CHANCE_GX;
+      }
+    }
+    return SymphogearModeStatus.NORMAL;
   }
 }

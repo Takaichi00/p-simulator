@@ -3,10 +3,14 @@ package com.takaichi00.domain.symphogear;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class SymphogearSpecTest {
+
+  private SymphogearSpec testTarget;
 
   @DisplayName("通常時")
   @Nested
@@ -16,8 +20,7 @@ class SymphogearSpecTest {
     void _1回抽選してxxxを引き当てなかった場合はハズレが取得できる() {
       // setup
       Boolean expected = false;
-      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
-        new CustomRandom(100)));
+      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(100)));
 
       // execute
       Boolean actual = testTarget.drawLots();
@@ -31,8 +34,7 @@ class SymphogearSpecTest {
     void _1回抽選してxxxを引き当てた場合はあたりが取得できる() {
       // setup
       Boolean expected = true;
-      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
-        new CustomRandom(9)));
+      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(9)));
 
       // execute
       Boolean actual = testTarget.drawLots();
@@ -44,8 +46,7 @@ class SymphogearSpecTest {
     @Test
     @DisplayName("大当たりが発生すると 1/100 の確率で 10R (1300の出玉)を取得できる")
     void 大当たりが発生するとxxxの確率で10Rを取得できる() {
-      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
-        new CustomRandom(0)));
+      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(0)));
 
       int expected = 1300;
       int actual = testTarget.getHitRoundCount();
@@ -55,8 +56,7 @@ class SymphogearSpecTest {
     @Test
     @DisplayName("大当たりが発生すると 99/100 の確率で 3R (390の出玉)を取得でき、最終決戦に突入する")
     void 大当たりが発生するとxxxの確率で3Rを取得でき最終決戦に突入する() {
-      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
-        new CustomRandom(1)));
+      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(1)));
 
       int expectedHitRoundCount = 390;
       int actualHitRoundCount = testTarget.getHitRoundCount();
@@ -74,10 +74,17 @@ class SymphogearSpecTest {
   class LastBattle {
 
     @Test
-    @DisplayName("1/7.6 の確率を5回抽選し、もし1回以上大当りが獲得できたらシンフォギアチャンス GX に突入する")
+    @DisplayName("1/7.6 の確率を5回抽選し、もし5回目で1回大当りが獲得できたらシンフォギアチャンス GX に突入する")
     void xxxの確率を5回抽選しもし1回以上大当りが獲得できたらシンフォギアチャンスGXに突入する() {
-      SymphogearSpec testTarget = new SymphogearSpec(new RateCalculator(
-        new CustomRandom(1)));
+
+      RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+      SymphogearSpec testTarget = new SymphogearSpec(rateCalculator);
+
+      when(rateCalculator.calcurate(10,76)).thenReturn(false,
+                                                                          false,
+                                                                               false,
+                                                                               false,
+                                                                               true);
 
       SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
       SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
