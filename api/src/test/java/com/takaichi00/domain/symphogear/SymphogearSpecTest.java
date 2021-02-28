@@ -90,6 +90,24 @@ class SymphogearSpecTest {
       SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
+
+    @Test
+    @DisplayName("1/7.6 の確率を5回抽選し、もし一回も大当りが獲得できなければ通常時に戻る")
+    void xxxの確率を5回抽選しもしもし一回も大当りが獲得できなければ通常時に戻る() {
+
+      RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+      SymphogearSpec testTarget = new SymphogearSpec(rateCalculator);
+
+      when(rateCalculator.calcurate(10,76)).thenReturn(false,
+                                                                          false,
+                                                                               false,
+                                                                               false,
+                                                                               false);
+
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.NORMAL;
+      SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
+      assertEquals(expectedModeStatus, actualModeStatus);
+    }
   }
 
 }
