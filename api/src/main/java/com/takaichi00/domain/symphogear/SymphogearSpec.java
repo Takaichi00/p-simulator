@@ -27,6 +27,7 @@ public class SymphogearSpec {
 
   public int getHitRoundCount() {
     if (rateCalculator.calcurate(1, 100)) {
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX;
       return ROUND_COUNT_10R;
     }
     symphogearModeStatus = SymphogearModeStatus.LAST_BUTTLE;

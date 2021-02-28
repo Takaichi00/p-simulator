@@ -44,13 +44,17 @@ class SymphogearSpecTest {
     }
 
     @Test
-    @DisplayName("大当たりが発生すると 1/100 の確率で 10R (1300の出玉)を取得できる")
-    void 大当たりが発生するとxxxの確率で10Rを取得できる() {
+    @DisplayName("大当たりが発生すると 1/100 の確率の確率でシンフォギアチャンス GX に突入する")
+    void 大当たりが発生するとxxxの確率シンフォギアチャンスGXに突入する() {
       testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(0)));
 
       int expected = 1300;
       int actual = testTarget.getHitRoundCount();
       assertEquals(expected, actual);
+
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
+      SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
+      assertEquals(expectedModeStatus, actualModeStatus);
     }
 
     @Test
