@@ -1,6 +1,6 @@
 package com.takaichi00.domain.symphogear;
 
-public class SymphogearSpec {
+public class SymphogearMachine {
 
   private final RateCalculator rateCalculator;
   private static final int NUMERATOR_SYMPHO_NORMAL = 10;
@@ -10,11 +10,11 @@ public class SymphogearSpec {
 
   private SymphogearModeStatus symphogearModeStatus;
 
-  SymphogearSpec() {
+  SymphogearMachine() {
     rateCalculator = new RateCalculator();
   }
 
-  SymphogearSpec(RateCalculator rateCalculator) {
+  SymphogearMachine(RateCalculator rateCalculator) {
     this.rateCalculator = rateCalculator;
     symphogearModeStatus = SymphogearModeStatus.NORMAL;
   }

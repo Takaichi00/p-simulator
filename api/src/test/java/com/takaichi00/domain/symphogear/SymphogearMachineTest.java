@@ -8,9 +8,9 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class SymphogearSpecTest {
+class SymphogearMachineTest {
 
-  private SymphogearSpec testTarget;
+  private SymphogearMachine testTarget;
 
   @DisplayName("通常時")
   @Nested
@@ -20,7 +20,7 @@ class SymphogearSpecTest {
     void _1回抽選してxxxを引き当てなかった場合はハズレが取得できる() {
       // setup
       Boolean expected = false;
-      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(100)));
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(100)));
 
       // execute
       Boolean actual = testTarget.drawLots();
@@ -34,7 +34,7 @@ class SymphogearSpecTest {
     void _1回抽選してxxxを引き当てた場合はあたりが取得できる() {
       // setup
       Boolean expected = true;
-      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(9)));
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(9)));
 
       // execute
       Boolean actual = testTarget.drawLots();
@@ -46,7 +46,7 @@ class SymphogearSpecTest {
     @Test
     @DisplayName("大当たりが発生すると 1/100 の確率の確率でシンフォギアチャンス GX に突入する")
     void 大当たりが発生するとxxxの確率シンフォギアチャンスGXに突入する() {
-      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(0)));
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(0)));
 
       int expected = 1300;
       int actual = testTarget.getHitRoundCount();
@@ -60,7 +60,7 @@ class SymphogearSpecTest {
     @Test
     @DisplayName("大当たりが発生すると 99/100 の確率で 3R (390の出玉)を取得でき、最終決戦に突入する")
     void 大当たりが発生するとxxxの確率で3Rを取得でき最終決戦に突入する() {
-      testTarget = new SymphogearSpec(new RateCalculator(new CustomRandom(1)));
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(1)));
 
       int expectedHitRoundCount = 390;
       int actualHitRoundCount = testTarget.getHitRoundCount();
@@ -82,7 +82,7 @@ class SymphogearSpecTest {
     void xxxの確率を5回抽選しもし1回以上大当りが獲得できたらシンフォギアチャンスGXに突入する() {
 
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
-      SymphogearSpec testTarget = new SymphogearSpec(rateCalculator);
+      SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
 
       when(rateCalculator.calcurate(10,76)).thenReturn(false,
                                                                           false,
@@ -100,7 +100,7 @@ class SymphogearSpecTest {
     void xxxの確率を5回抽選しもしもし一回も大当りが獲得できなければ通常時に戻る() {
 
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
-      SymphogearSpec testTarget = new SymphogearSpec(rateCalculator);
+      SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
 
       when(rateCalculator.calcurate(10,76)).thenReturn(false,
                                                                           false,
