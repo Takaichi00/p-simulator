@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 public class SymphogearServiceImpl implements SymphogearService {
   @Override
   public HitResultModel getHitInformation(HitInputModel hitInputModel) {
+
     return HitResultModel.builder()
                          .investmentYen(5000)
                          .collectionBall(2000)

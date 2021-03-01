@@ -1,7 +1,5 @@
 package com.takaichi00.domain.symphogear;
 
-import lombok.AllArgsConstructor;
-
 public class SymphogearSpec {
 
   private final RateCalculator rateCalculator;
