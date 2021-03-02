@@ -36,12 +36,17 @@ public class SymphogearMachine {
     return symphogearModeStatus;
   }
 
-  public SymphogearModeStatus lastBattle() {
+  public void lastBattle() {
+    int hitCount = 0;
     for (int i = 0; i < 5; ++i) {
       if (rateCalculator.calcurate(10, 76)) {
-        return SymphogearModeStatus.CHANCE_GX;
+        ++hitCount;
       }
     }
-    return SymphogearModeStatus.NORMAL;
+    if (hitCount > 0) {
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX;
+    } else {
+      symphogearModeStatus = SymphogearModeStatus.NORMAL;
+    }
   }
 }

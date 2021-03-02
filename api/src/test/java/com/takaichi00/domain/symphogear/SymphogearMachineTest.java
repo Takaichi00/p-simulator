@@ -91,7 +91,8 @@ class SymphogearMachineTest {
                                                                                true);
 
       SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
-      SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
+      testTarget.lastBattle();
+      SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
 
@@ -109,7 +110,8 @@ class SymphogearMachineTest {
                                                                                false);
 
       SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.NORMAL;
-      SymphogearModeStatus actualModeStatus = testTarget.lastBattle();
+      testTarget.lastBattle();
+      SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
   }
