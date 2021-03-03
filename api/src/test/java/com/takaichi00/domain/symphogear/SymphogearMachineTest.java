@@ -116,4 +116,11 @@ class SymphogearMachineTest {
     }
   }
 
+  @Nested
+  @DisplayName("シンフォギアチャンス GX")
+  class SymphogearChanceGx {
+
+
+  }
+
 }
