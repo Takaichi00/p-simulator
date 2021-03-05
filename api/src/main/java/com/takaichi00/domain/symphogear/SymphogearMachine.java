@@ -1,5 +1,7 @@
 package com.takaichi00.domain.symphogear;
 
+import com.takaichi00.domain.pachinko.RateCalculator;
+
 public class SymphogearMachine {
 
   private final RateCalculator rateCalculator;

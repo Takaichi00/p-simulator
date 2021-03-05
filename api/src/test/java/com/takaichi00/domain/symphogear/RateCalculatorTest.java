@@ -2,6 +2,7 @@ package com.takaichi00.domain.symphogear;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.takaichi00.domain.pachinko.RateCalculator;
 import org.junit.jupiter.api.Test;
 
 class RateCalculatorTest {

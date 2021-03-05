@@ -1,4 +1,4 @@
-package com.takaichi00.domain.symphogear;
+package com.takaichi00.domain.pachinko;
 
 import java.util.Random;
 
@@ -10,7 +10,7 @@ public class RateCalculator {
     random = new Random();
   }
 
-  RateCalculator(Random originalRandom) {
+  public RateCalculator(Random originalRandom) {
     random = originalRandom;
   }
 
