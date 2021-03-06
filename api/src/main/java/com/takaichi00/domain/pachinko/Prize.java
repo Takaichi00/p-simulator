@@ -1,14 +1,14 @@
 package com.takaichi00.domain.pachinko;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Builder
 @Getter
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Prize {
   private final Integer smallPrizeAmount;
   private final Integer middlePrizeAmount;
-  private final Integer BigPrizeAmount;
+  private final Integer bigPrizeAmount;
 }

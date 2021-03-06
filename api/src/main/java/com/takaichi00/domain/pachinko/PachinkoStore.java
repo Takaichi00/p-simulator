@@ -15,15 +15,19 @@ public class PachinkoStore {
   public Prize convertBallToPrize(int ball) {
 
     int smallPrizeAmount = 0;
+    int middlePrizeAmount = 0;
 
-    Double ballAfterRate = Double.valueOf(ball) * rate;
+    double ballAfterRate = (double) ball * rate;
+
+    if (ballAfterRate >= prizeRateInformation.getMiddlePrizePrice()) {
+      ++middlePrizeAmount;
+      ballAfterRate = ballAfterRate - prizeRateInformation.getMiddlePrizePrice();
+    }
 
     if (ballAfterRate >= prizeRateInformation.getSmallPrizePrice()) {
       ++smallPrizeAmount;
     }
 
-    return Prize.builder()
-                .smallPrizeAmount(smallPrizeAmount)
-                .build();
+    return new Prize(smallPrizeAmount, middlePrizeAmount, 0);
   }
 }
