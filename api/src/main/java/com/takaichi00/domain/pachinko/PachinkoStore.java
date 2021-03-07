@@ -16,8 +16,14 @@ public class PachinkoStore {
 
     int smallPrizeAmount = 0;
     int middlePrizeAmount = 0;
+    int bigPrizeAmount = 0;
 
     double ballAfterRate = (double) ball * rate;
+
+    if (ballAfterRate >= prizeRateInformation.getBigPrizePrice()) {
+      ++bigPrizeAmount;
+      ballAfterRate = ballAfterRate - prizeRateInformation.getBigPrizePrice();
+    }
 
     if (ballAfterRate >= prizeRateInformation.getMiddlePrizePrice()) {
       ++middlePrizeAmount;
@@ -28,6 +34,6 @@ public class PachinkoStore {
       ++smallPrizeAmount;
     }
 
-    return new Prize(smallPrizeAmount, middlePrizeAmount, 0);
+    return new Prize(smallPrizeAmount, middlePrizeAmount, bigPrizeAmount);
   }
 }

@@ -42,5 +42,26 @@ class PachinkoStoreTest {
       assertEquals(expected, actual);
     }
 
+    @Test
+    void _624玉は小1つと交換する() {
+      Prize expected = new Prize(1, 0, 0);
+      Prize actual = pachinkoStore.convertBallToPrize(624);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _626玉は中1つと交換する() {
+      Prize expected = new Prize(0, 1, 0);
+      Prize actual = pachinkoStore.convertBallToPrize(626);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _2000玉は大1つと交換する() {
+      Prize expected = new Prize(0, 0, 1);
+      Prize actual = pachinkoStore.convertBallToPrize(2000);
+      assertEquals(expected, actual);
+    }
+
   }
 }
