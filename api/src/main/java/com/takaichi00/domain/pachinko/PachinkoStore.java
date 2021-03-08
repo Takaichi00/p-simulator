@@ -20,18 +20,19 @@ public class PachinkoStore {
 
     double ballAfterRate = (double) ball * rate;
 
-    if (ballAfterRate >= prizeRateInformation.getBigPrizePrice()) {
+    while (ballAfterRate >= prizeRateInformation.getBigPrizePrice()) {
       ++bigPrizeAmount;
       ballAfterRate = ballAfterRate - prizeRateInformation.getBigPrizePrice();
     }
 
-    if (ballAfterRate >= prizeRateInformation.getMiddlePrizePrice()) {
+    while (ballAfterRate >= prizeRateInformation.getMiddlePrizePrice()) {
       ++middlePrizeAmount;
       ballAfterRate = ballAfterRate - prizeRateInformation.getMiddlePrizePrice();
     }
 
-    if (ballAfterRate >= prizeRateInformation.getSmallPrizePrice()) {
+    while (ballAfterRate >= prizeRateInformation.getSmallPrizePrice()) {
       ++smallPrizeAmount;
+      ballAfterRate = ballAfterRate - prizeRateInformation.getSmallPrizePrice();
     }
 
     return new Prize(smallPrizeAmount, middlePrizeAmount, bigPrizeAmount);

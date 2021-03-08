@@ -43,8 +43,8 @@ class PachinkoStoreTest {
     }
 
     @Test
-    void _624玉は小1つと交換する() {
-      Prize expected = new Prize(1, 0, 0);
+    void _624玉は小2つと交換する() {
+      Prize expected = new Prize(2, 0, 0);
       Prize actual = pachinkoStore.convertBallToPrize(624);
       assertEquals(expected, actual);
     }
@@ -63,5 +63,39 @@ class PachinkoStoreTest {
       assertEquals(expected, actual);
     }
 
+    @Test
+    void _4000玉は大2つと交換する() {
+      Prize expected = new Prize(0, 0, 2);
+      Prize actual = pachinkoStore.convertBallToPrize(4000);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _1999玉は中3つと交換する() {
+      Prize expected = new Prize(0, 3, 0);
+      Prize actual = pachinkoStore.convertBallToPrize(1999);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _875玉は小1と中1つと交換する() {
+      Prize expected = new Prize(1, 1, 0);
+      Prize actual = pachinkoStore.convertBallToPrize(875);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _2250玉は小1と大1つと交換する() {
+      Prize expected = new Prize(1, 0, 1);
+      Prize actual = pachinkoStore.convertBallToPrize(2250);
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void _2625玉は中1と大1つと交換する() {
+      Prize expected = new Prize(0, 1, 1);
+      Prize actual = pachinkoStore.convertBallToPrize(2650);
+      assertEquals(expected, actual);
+    }
   }
 }
