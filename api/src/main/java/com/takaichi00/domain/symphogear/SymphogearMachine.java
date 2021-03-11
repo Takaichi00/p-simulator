@@ -21,7 +21,7 @@ public class SymphogearMachine {
     symphogearModeStatus = SymphogearModeStatus.NORMAL;
   }
 
-  public Boolean drawLots() {
+  public boolean drawLots() {
     return rateCalculator.calcurate(NUMERATOR_SYMPHO_NORMAL, DENOMINATOR_SYMPHO_NORMAL);
   }
 
