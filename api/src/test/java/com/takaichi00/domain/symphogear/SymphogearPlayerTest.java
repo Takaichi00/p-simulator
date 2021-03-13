@@ -1,6 +1,7 @@
 package com.takaichi00.domain.symphogear;
 
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -24,8 +25,10 @@ class SymphogearPlayerTest {
       @ParameterizedTest
       @CsvSource({
         "10000, 200",
+        "7500, 150",
         "5000, 100",
-        "2500, 50"
+        "2500, 50",
+        "100, 2",
       })
       void X円投資Y回転であたった場合(int firstHitMoney, int firstHitRound) {
         // setup
@@ -42,6 +45,26 @@ class SymphogearPlayerTest {
 
         SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine, ROUND_PER_1000YEN);
         FirstHitInformation expected = FirstHitInformation.of(firstHitMoney, firstHitRound);
+
+        // execute
+        testTarget.playSymphogear();
+        FirstHitInformation actual = testTarget.getFirstImformation();
+
+        // assert
+        assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
+        assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
+      }
+
+      @Test
+      void _50円投資1回転であたった場合() {
+        // setup
+        SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
+
+
+        when(symphogearMachine.drawLots()).thenReturn(true);
+
+        SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine, ROUND_PER_1000YEN);
+        FirstHitInformation expected = FirstHitInformation.of(50, 1);
 
         // execute
         testTarget.playSymphogear();
