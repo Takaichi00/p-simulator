@@ -13,6 +13,19 @@ class SymphogearMachineTest {
 
   private SymphogearMachine testTarget;
 
+  @DisplayName("共通機能")
+  @Nested
+  class Common {
+
+    @Test
+    void _500円を入金すると125玉を払い出す() {
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(100)));
+      int expected = 125;
+      int actual = testTarget.outBallBy500Yen();
+      assertEquals(expected, actual);
+    }
+  }
+
   @DisplayName("通常時")
   @Nested
   class Normal {
