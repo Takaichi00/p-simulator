@@ -1,12 +1,10 @@
 package com.takaichi00.domain.symphogear;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import static java.math.RoundingMode.HALF_UP;
 
 import java.math.BigDecimal;
-
-import static java.math.RoundingMode.HALF_DOWN;
-import static java.math.RoundingMode.HALF_UP;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -33,5 +31,16 @@ public class SymphogearPlayer {
         .multiply(BigDecimal.valueOf(1000));
 
     return FirstHitInformation.of(totalYen.intValue(), hitCount);
+  }
+
+  public void getBallBy500Yen() {
+  }
+
+  public int getHavingBall() {
+    return 125;
+  }
+
+  public int getUseMoney() {
+    return 500;
   }
 }

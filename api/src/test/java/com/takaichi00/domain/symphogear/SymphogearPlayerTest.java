@@ -19,6 +19,20 @@ class SymphogearPlayerTest {
 
     private static final int ROUND_PER_1000YEN = 20;
 
+    @Test
+    void Playerは500円をマシンに入れると所持玉と消費金額を取得できる() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
+      int expectedBall = 125;
+      int expectedMoney = 500;
+
+      testTarget.getBallBy500Yen();
+      int actualBall = testTarget.getHavingBall();
+      int actualMoney = testTarget.getUseMoney();
+
+      assertEquals(expectedBall, actualBall);
+      assertEquals(expectedMoney, actualMoney);
+    }
+
     @Nested
     class 通常時のシンフォギアを大当りするまで打ち_初当たりにかかったお金と回転数を取得できる {
 
