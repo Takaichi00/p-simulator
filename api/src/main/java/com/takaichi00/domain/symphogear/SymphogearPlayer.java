@@ -44,6 +44,10 @@ public class SymphogearPlayer {
     useMoney += 500;
   }
 
+  public BigDecimal getProbabilityDrawingPer1Ball() {
+    return BigDecimal.valueOf(0.08);
+  }
+
   public int getHavingBall() {
     return havingBall;
   }
@@ -51,4 +55,5 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
+
 }

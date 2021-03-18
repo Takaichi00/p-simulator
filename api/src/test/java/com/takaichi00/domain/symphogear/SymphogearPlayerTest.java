@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,16 @@ class SymphogearPlayerTest {
 
       assertEquals(expectedBall, actualBall);
       assertEquals(expectedMoney, actualMoney);
+    }
+
+    @Test
+    void Playerの1玉当たりへそに入れる確率を取得できる() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
+
+      BigDecimal expected = BigDecimal.valueOf(0.08);
+      BigDecimal actual = testTarget.getProbabilityDrawingPer1Ball();
+      assertEquals(expected, actual);
+
     }
 
     @Nested
