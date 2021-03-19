@@ -59,6 +59,14 @@ class SymphogearPlayerTest {
 
     }
 
+    @Test
+    void Playerは1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
+      int expected = 10;
+      int actual = testTarget.putBallUntilInNavel();
+      assertEquals(expected, actual);
+    }
+
     @Nested
     class 通常時のシンフォギアを大当りするまで打ち_初当たりにかかったお金と回転数を取得できる {
 
@@ -88,7 +96,7 @@ class SymphogearPlayerTest {
 
         // execute
         testTarget.playSymphogear();
-        FirstHitInformation actual = testTarget.getFirstImformation();
+        FirstHitInformation actual = testTarget.getFirstInformation();
 
         // assert
         assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
@@ -108,7 +116,7 @@ class SymphogearPlayerTest {
 
         // execute
         testTarget.playSymphogear();
-        FirstHitInformation actual = testTarget.getFirstImformation();
+        FirstHitInformation actual = testTarget.getFirstInformation();
 
         // assert
         assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());

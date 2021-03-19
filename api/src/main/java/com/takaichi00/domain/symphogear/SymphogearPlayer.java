@@ -26,7 +26,7 @@ public class SymphogearPlayer {
   public void playSymphogear() {
   }
 
-  public FirstHitInformation getFirstImformation() {
+  public FirstHitInformation getFirstInformation() {
     int hitCount = 1;
 
     while (!symphogearMachine.drawLots()) {
@@ -49,6 +49,10 @@ public class SymphogearPlayer {
     return BigDecimal.valueOf(roundPer1000yen).divide(BigDecimal.valueOf(ballCountBy1000));
   }
 
+  public int putBallUntilInNavel() {
+    return 10;
+  }
+
   public int getHavingBall() {
     return havingBall;
   }
@@ -56,5 +60,4 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
-
 }
