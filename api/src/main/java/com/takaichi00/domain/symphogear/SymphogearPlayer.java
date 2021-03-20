@@ -46,7 +46,8 @@ public class SymphogearPlayer {
 
   public BigDecimal getProbabilityDrawingPer1Ball() {
     int ballCountBy1000 = symphogearMachine.outBallBy500Yen() * 2;
-    return BigDecimal.valueOf(roundPer1000yen).divide(BigDecimal.valueOf(ballCountBy1000));
+    return BigDecimal.valueOf(roundPer1000yen)
+        .divide(BigDecimal.valueOf(ballCountBy1000), 5, HALF_UP);
   }
 
   public int putBallUntilInNavel() {

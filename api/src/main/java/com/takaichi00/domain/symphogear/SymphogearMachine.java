@@ -23,11 +23,11 @@ public class SymphogearMachine {
   }
 
   public boolean drawLots() {
-    return rateCalculator.calcurate(NUMERATOR_SYMPHO_NORMAL, DENOMINATOR_SYMPHO_NORMAL);
+    return rateCalculator.calculate(NUMERATOR_SYMPHO_NORMAL, DENOMINATOR_SYMPHO_NORMAL);
   }
 
   public int getHitRoundCount() {
-    if (rateCalculator.calcurate(1, 100)) {
+    if (rateCalculator.calculate(1, 100)) {
       symphogearModeStatus = SymphogearModeStatus.CHANCE_GX;
       return ROUND_COUNT_10R;
     }
@@ -42,7 +42,7 @@ public class SymphogearMachine {
   public void lastBattle() {
     int hitCount = 0;
     for (int i = 0; i < 5; ++i) {
-      if (rateCalculator.calcurate(10, 76)) {
+      if (rateCalculator.calculate(10, 76)) {
         ++hitCount;
       }
     }

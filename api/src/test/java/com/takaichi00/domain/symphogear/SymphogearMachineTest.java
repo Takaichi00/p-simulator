@@ -98,7 +98,7 @@ class SymphogearMachineTest {
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
       SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
 
-      when(rateCalculator.calcurate(10,76)).thenReturn(false,
+      when(rateCalculator.calculate(10,76)).thenReturn(false,
                                                                           false,
                                                                                false,
                                                                                false,
@@ -117,7 +117,7 @@ class SymphogearMachineTest {
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
       SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
 
-      when(rateCalculator.calcurate(10,76)).thenReturn(false,
+      when(rateCalculator.calculate(10,76)).thenReturn(false,
                                                                           false,
                                                                                false,
                                                                                false,

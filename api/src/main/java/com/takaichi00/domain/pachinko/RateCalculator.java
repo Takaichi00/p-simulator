@@ -14,7 +14,7 @@ public class RateCalculator {
     random = originalRandom;
   }
 
-  public boolean calcurate(Integer numerator, Integer denominator) {
+  public boolean calculate(Integer numerator, Integer denominator) {
     int result = random.nextInt(denominator);
     return result < numerator;
   }
