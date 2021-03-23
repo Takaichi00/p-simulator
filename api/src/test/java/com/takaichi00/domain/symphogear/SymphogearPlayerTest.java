@@ -65,6 +65,11 @@ class SymphogearPlayerTest {
       int expected = 10;
       int actual = testTarget.putBallUntilInNavel();
       assertEquals(expected, actual);
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 240;
+      assertEquals(expectedHavingBall, actualHavingBall);
+
     }
 
     @Nested
