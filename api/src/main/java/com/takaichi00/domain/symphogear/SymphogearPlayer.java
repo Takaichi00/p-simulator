@@ -69,9 +69,17 @@ public class SymphogearPlayer {
   }
 
   public int putBallUntilInNavel() {
-    // 0.08 → 8/100
-    rateCalculator.calculate(8, 100);
-    return 10;
+
+    int consumeBallUntilInNavel = 1;
+    do {
+      if (havingBall == 0) {
+        getBallBy500Yen();
+      }
+      ++consumeBallUntilInNavel;
+      --havingBall;
+    } while (!rateCalculator.calculate(8, 100));
+
+    return consumeBallUntilInNavel;
   }
 
   public int getHavingBall() {

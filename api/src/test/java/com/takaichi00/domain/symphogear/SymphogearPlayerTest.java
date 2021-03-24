@@ -60,7 +60,7 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
+    void Playerは0玉を所持している場合_500円を消費して250玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
       SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
       int expected = 10;
       int actual = testTarget.putBallUntilInNavel();
