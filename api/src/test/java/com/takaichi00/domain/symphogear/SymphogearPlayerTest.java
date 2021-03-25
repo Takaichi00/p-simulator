@@ -1,5 +1,6 @@
 package com.takaichi00.domain.symphogear;
 
+import com.takaichi00.domain.pachinko.RateCalculator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,13 +62,25 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは0玉を所持している場合_500円を消費して250玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
-      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
+      RateCalculator spyRateCalculator = spy(new RateCalculator());
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
+
+      List<Boolean> hitMockBoolean = new ArrayList<>();
+
+      for (int i = 0; i < 8; ++i) {
+        hitMockBoolean.add(false);
+      }
+      hitMockBoolean.add(true);
+
+      when(spyRateCalculator.calculate(20, 250))
+          .thenReturn(false, hitMockBoolean.toArray(new Boolean[hitMockBoolean.size()]));
+
       int expected = 10;
       int actual = testTarget.putBallUntilInNavel();
       assertEquals(expected, actual);
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 240;
+      int expectedHavingBall = 115;
       assertEquals(expectedHavingBall, actualHavingBall);
 
     }

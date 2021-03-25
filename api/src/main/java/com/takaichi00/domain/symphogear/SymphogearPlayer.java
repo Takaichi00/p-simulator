@@ -70,14 +70,15 @@ public class SymphogearPlayer {
 
   public int putBallUntilInNavel() {
 
-    int consumeBallUntilInNavel = 1;
+    int consumeBallUntilInNavel = 0;
     do {
       if (havingBall == 0) {
         getBallBy500Yen();
       }
       ++consumeBallUntilInNavel;
       --havingBall;
-    } while (!rateCalculator.calculate(8, 100));
+    } while (!rateCalculator.calculate(roundPer1000yen,
+                           symphogearMachine.outBallBy500Yen() * 2));
 
     return consumeBallUntilInNavel;
   }
