@@ -15,6 +15,7 @@ public class SymphogearMachine {
 
   SymphogearMachine() {
     rateCalculator = new RateCalculator();
+    symphogearModeStatus = SymphogearModeStatus.NORMAL;
   }
 
   SymphogearMachine(RateCalculator rateCalculator) {

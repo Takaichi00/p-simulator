@@ -3,8 +3,6 @@ package com.takaichi00.domain.symphogear;
 import com.takaichi00.domain.pachinko.RateCalculator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -61,19 +59,19 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは0玉を所持している場合_500円を消費して250玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
+    void Playerは0玉を所持している場合_500円を消費して125玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
       RateCalculator spyRateCalculator = spy(new RateCalculator());
       SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
 
-      List<Boolean> hitMockBoolean = new ArrayList<>();
+      List<Boolean> inNavelMockBoolean = new ArrayList<>();
 
       for (int i = 0; i < 8; ++i) {
-        hitMockBoolean.add(false);
+        inNavelMockBoolean.add(false);
       }
-      hitMockBoolean.add(true);
+      inNavelMockBoolean.add(true);
 
       when(spyRateCalculator.calculate(20, 250))
-          .thenReturn(false, hitMockBoolean.toArray(new Boolean[hitMockBoolean.size()]));
+          .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
 
       int expected = 10;
       int actual = testTarget.putBallUntilInNavel();
@@ -85,61 +83,48 @@ class SymphogearPlayerTest {
 
     }
 
-    @Nested
-    class 通常時のシンフォギアを大当りするまで打ち_初当たりにかかったお金と回転数を取得できる {
+    @Test
+    void Playerは0玉所持している場合_大当りを取得するまで玉をへそに入れ続け_大当りを獲得したときの消費玉と消費金額と回転数を取得できる() {
+      // 100回転で大当りを獲得する場合
+      // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
 
-      @ParameterizedTest
-      @CsvSource({
-        "10000, 200",
-        "7500, 150",
-        "5000, 100",
-        "2500, 50",
-        "100, 2",
-      })
-      void X円投資Y回転であたった場合(int firstHitMoney, int firstHitRound) {
-        // setup
-        SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
 
-        List<Boolean> hitMockBoolean = new ArrayList<>();
+      RateCalculator spyRateCalculator = spy(new RateCalculator());
+      SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
+      SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine,
+                                                        ROUND_PER_1000YEN,
+                                                        spyRateCalculator);
 
-        for (int i = 0; i < firstHitRound - 2; ++i) {
-          hitMockBoolean.add(false);
-        }
-        hitMockBoolean.add(true);
-
-        when(symphogearMachine.drawLots()).thenReturn(false, hitMockBoolean.toArray(new Boolean[hitMockBoolean.size()]));
-
-        SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine, ROUND_PER_1000YEN);
-        FirstHitInformation expected = FirstHitInformation.of(firstHitMoney, firstHitRound);
-
-        // execute
-        testTarget.playSymphogear();
-        FirstHitInformation actual = testTarget.getFirstInformation();
-
-        // assert
-        assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
-        assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
+      // へそに入れる確率
+      List<Boolean> inNavelMockBoolean = new ArrayList<>();
+      for (int i = 0; i < 8; ++i) {
+        inNavelMockBoolean.add(false);
       }
-
-      @Test
-      void _50円投資1回転であたった場合() {
-        // setup
-        SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
+      inNavelMockBoolean.add(true);
+      when(spyRateCalculator.calculate(20, 250))
+          .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
 
 
-        when(symphogearMachine.drawLots()).thenReturn(true);
-
-        SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine, ROUND_PER_1000YEN);
-        FirstHitInformation expected = FirstHitInformation.of(50, 1);
-
-        // execute
-        testTarget.playSymphogear();
-        FirstHitInformation actual = testTarget.getFirstInformation();
-
-        // assert
-        assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
-        assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
+      // 大当りの確率
+      List<Boolean> hitMockBoolean = new ArrayList<>();
+      for (int i = 0; i < 98; ++i) {
+        hitMockBoolean.add(false);
       }
+      hitMockBoolean.add(true);
+      when(symphogearMachine.drawLots())
+          .thenReturn(false, hitMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
+
+
+      FirstHitInformation expected = FirstHitInformation.builder()
+                                                        .firstHitBall(1000)
+                                                        .firstHitMoney(1000)
+                                                        .firstHitRound(100)
+                                                        .build();
+
+      FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
+
+      assertEquals(expected, actual);
+
     }
   }
 }

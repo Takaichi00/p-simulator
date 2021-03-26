@@ -1,7 +1,5 @@
 package com.takaichi00.domain.symphogear;
 
-import static java.math.RoundingMode.HALF_UP;
-
 import java.math.BigDecimal;
 
 import com.takaichi00.domain.pachinko.RateCalculator;
@@ -41,22 +39,6 @@ public class SymphogearPlayer {
     return new SymphogearPlayer(symphogearMachine, roundPer1000yen, rateCalculator);
   }
 
-  public void playSymphogear() {
-  }
-
-  public FirstHitInformation getFirstInformation() {
-    int hitCount = 1;
-
-    while (!symphogearMachine.drawLots()) {
-      ++hitCount;
-    }
-    BigDecimal totalYen = BigDecimal.valueOf(hitCount)
-        .divide(BigDecimal.valueOf(roundPer1000yen), 5, HALF_UP)
-        .multiply(BigDecimal.valueOf(1000));
-
-    return FirstHitInformation.of(totalYen.intValue(), hitCount);
-  }
-
   public void getBallBy500Yen() {
     havingBall += symphogearMachine.outBallBy500Yen();
     useMoney += 500;
@@ -89,5 +71,13 @@ public class SymphogearPlayer {
 
   public int getUseMoney() {
     return useMoney;
+  }
+
+  public FirstHitInformation playSymphogearUntilFirstHit() {
+    return FirstHitInformation.builder()
+                              .firstHitBall(1000)
+                              .firstHitMoney(1000)
+                              .firstHitRound(100)
+                              .build();
   }
 }
