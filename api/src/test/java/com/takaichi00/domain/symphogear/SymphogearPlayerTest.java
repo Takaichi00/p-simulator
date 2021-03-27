@@ -95,36 +95,46 @@ class SymphogearPlayerTest {
                                                         ROUND_PER_1000YEN,
                                                         spyRateCalculator);
 
-      // へそに入れる確率
+      // へそに入れる確率をモック
       List<Boolean> inNavelMockBoolean = new ArrayList<>();
       for (int i = 0; i < 8; ++i) {
         inNavelMockBoolean.add(false);
       }
       inNavelMockBoolean.add(true);
+
+      for (int j = 0; j < 99; ++j) {
+        for (int i = 0; i < 9; ++i) {
+          inNavelMockBoolean.add(false);
+        }
+        inNavelMockBoolean.add(true);
+      }
+
+
       when(spyRateCalculator.calculate(20, 250))
           .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
 
 
-      // 大当りの確率
+      // 大当りの確率をモック
       List<Boolean> hitMockBoolean = new ArrayList<>();
       for (int i = 0; i < 98; ++i) {
         hitMockBoolean.add(false);
       }
       hitMockBoolean.add(true);
       when(symphogearMachine.drawLots())
-          .thenReturn(false, hitMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
+          .thenReturn(false, hitMockBoolean.toArray(new Boolean[hitMockBoolean.size()]));
 
 
       FirstHitInformation expected = FirstHitInformation.builder()
                                                         .firstHitBall(1000)
-                                                        .firstHitMoney(1000)
+                                                        .firstHitMoney(4000)
                                                         .firstHitRound(100)
                                                         .build();
 
       FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
 
-      assertEquals(expected, actual);
-
+      assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
+      assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
+      assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
     }
   }
 }

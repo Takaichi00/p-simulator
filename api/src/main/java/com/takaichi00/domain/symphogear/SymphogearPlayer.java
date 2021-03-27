@@ -1,8 +1,7 @@
 package com.takaichi00.domain.symphogear;
 
-import java.math.BigDecimal;
-
 import com.takaichi00.domain.pachinko.RateCalculator;
+import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
@@ -65,19 +64,29 @@ public class SymphogearPlayer {
     return consumeBallUntilInNavel;
   }
 
+
+  public FirstHitInformation playSymphogearUntilFirstHit() {
+
+    int consumeBallUntilHit = 0;
+    int round = 0;
+
+    do {
+      consumeBallUntilHit += putBallUntilInNavel();
+      ++round;
+    } while (!symphogearMachine.drawLots());
+
+    return FirstHitInformation.builder()
+                              .firstHitBall(consumeBallUntilHit)
+                              .firstHitMoney(useMoney)
+                              .firstHitRound(round)
+                              .build();
+  }
+
   public int getHavingBall() {
     return havingBall;
   }
 
   public int getUseMoney() {
     return useMoney;
-  }
-
-  public FirstHitInformation playSymphogearUntilFirstHit() {
-    return FirstHitInformation.builder()
-                              .firstHitBall(1000)
-                              .firstHitMoney(1000)
-                              .firstHitRound(100)
-                              .build();
   }
 }
