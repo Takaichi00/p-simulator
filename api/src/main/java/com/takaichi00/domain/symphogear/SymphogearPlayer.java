@@ -89,4 +89,8 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
+
+  public int getBall3RBetweenLastBattle() {
+    return 390;
+  }
 }

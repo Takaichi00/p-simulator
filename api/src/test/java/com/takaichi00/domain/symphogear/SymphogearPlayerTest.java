@@ -136,5 +136,19 @@ class SymphogearPlayerTest {
       assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
       assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
     }
+
+    @Test
+    void Playerは大当り取得後_99パーセントの確率で3Rの出玉を取得でき_最終決戦へ突入する() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
+      int expected = 390;
+      int actual = testTarget.getBall3RBetweenLastBattle();
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void Playerは大当り取得後_最終決戦を実施して突破できなかった場合_遊戯をやめて消費玉と消費金額と回転数を取得できる() {
+
+    }
+
   }
 }
