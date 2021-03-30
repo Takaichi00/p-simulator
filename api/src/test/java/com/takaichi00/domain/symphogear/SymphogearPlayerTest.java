@@ -4,7 +4,6 @@ import com.takaichi00.domain.pachinko.RateCalculator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,29 +48,12 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerの1玉当たりへそに入れる確率を取得できる() {
-      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
-
-      BigDecimal expected = BigDecimal.valueOf(0.08);
-      BigDecimal actual = testTarget.getProbabilityDrawingPer1Ball();
-      assertEquals(expected, actual);
-
-    }
-
-    @Test
     void Playerは0玉を所持している場合_500円を消費して125玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
       RateCalculator spyRateCalculator = spy(new RateCalculator());
       SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
-
-      List<Boolean> inNavelMockBoolean = new ArrayList<>();
-
-      for (int i = 0; i < 8; ++i) {
-        inNavelMockBoolean.add(false);
-      }
-      inNavelMockBoolean.add(true);
-
+      
       when(spyRateCalculator.calculate(20, 250))
-          .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9));
 
       int expected = 10;
       int actual = testTarget.putBallUntilInNavel();
@@ -87,8 +69,6 @@ class SymphogearPlayerTest {
     void Playerは0玉所持している場合_大当りを取得するまで玉をへそに入れ続け_大当りを獲得したときの消費玉と消費金額と回転数を取得できる() {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
-
-
       RateCalculator spyRateCalculator = spy(new RateCalculator());
       SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
       SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine,
@@ -115,13 +95,8 @@ class SymphogearPlayerTest {
 
 
       // 大当りの確率をモック
-      List<Boolean> hitMockBoolean = new ArrayList<>();
-      for (int i = 0; i < 98; ++i) {
-        hitMockBoolean.add(false);
-      }
-      hitMockBoolean.add(true);
       when(symphogearMachine.drawLots())
-          .thenReturn(false, hitMockBoolean.toArray(new Boolean[hitMockBoolean.size()]));
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
 
       FirstHitInformation expected = FirstHitInformation.builder()
@@ -151,4 +126,16 @@ class SymphogearPlayerTest {
     }
 
   }
+
+  private Boolean[] createFalseArrayUntilSpecifiedTrueNumber(int trueNumber) {
+    List<Boolean> value = new ArrayList<>();
+
+    for (int i = 0; i < trueNumber - 1; ++i) {
+      value.add(false);
+    }
+    value.add(true);
+
+    return value.toArray(new Boolean[value.size()]);
+  }
+
 }
