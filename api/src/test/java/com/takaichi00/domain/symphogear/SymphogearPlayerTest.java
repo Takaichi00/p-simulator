@@ -69,11 +69,43 @@ class SymphogearPlayerTest {
     void Playerは0玉所持している場合_大当りを取得するまで玉をへそに入れ続け_大当りを獲得したときの消費玉と消費金額と回転数を取得できる() {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
+
+      FirstHitInformation expected = FirstHitInformation.builder()
+                                                        .firstHitBall(1000)
+                                                        .firstHitMoney(4000)
+                                                        .firstHitRound(100)
+                                                        .build();
+      SymphogearPlayer testTarget = playUntilFirstHit();
+      FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
+
+      assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
+      assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
+      assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
+    }
+
+    @Test
+    void Playerは大当り取得後_99パーセントの確率で3Rの出玉を取得でき_最終決戦へ突入する() {
+
+      SymphogearPlayer testTarget = playUntilFirstHit();
+
+      int expected = 390;
+      int actual = testTarget.getBall3RBetweenLastBattle();
+      assertEquals(expected, actual);
+    }
+
+    @Test
+    void Playerは大当り取得後_最終決戦を実施して突破できなかった場合_遊戯をやめて消費玉と消費金額と回転数を取得できる() {
+
+    }
+
+    private SymphogearPlayer playUntilFirstHit() {
+      // 100回転で大当りを獲得する場合
+      // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
       RateCalculator spyRateCalculator = spy(new RateCalculator());
       SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
       SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine,
-                                                        ROUND_PER_1000YEN,
-                                                        spyRateCalculator);
+          ROUND_PER_1000YEN,
+          spyRateCalculator);
 
       // へそに入れる確率をモック
       List<Boolean> inNavelMockBoolean = new ArrayList<>();
@@ -89,42 +121,16 @@ class SymphogearPlayerTest {
         inNavelMockBoolean.add(true);
       }
 
-
       when(spyRateCalculator.calculate(20, 250))
           .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
-
 
       // 大当りの確率をモック
       when(symphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
-
-      FirstHitInformation expected = FirstHitInformation.builder()
-                                                        .firstHitBall(1000)
-                                                        .firstHitMoney(4000)
-                                                        .firstHitRound(100)
-                                                        .build();
-
-      FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
-
-      assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
-      assertEquals(expected.getFirstHitMoney(), actual.getFirstHitMoney());
-      assertEquals(expected.getFirstHitRound(), actual.getFirstHitRound());
-    }
-
-    @Test
-    void Playerは大当り取得後_99パーセントの確率で3Rの出玉を取得でき_最終決戦へ突入する() {
-      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN);
-      int expected = 390;
-      int actual = testTarget.getBall3RBetweenLastBattle();
-      assertEquals(expected, actual);
-    }
-
-    @Test
-    void Playerは大当り取得後_最終決戦を実施して突破できなかった場合_遊戯をやめて消費玉と消費金額と回転数を取得できる() {
+      return testTarget;
 
     }
-
   }
 
   private Boolean[] createFalseArrayUntilSpecifiedTrueNumber(int trueNumber) {
