@@ -75,7 +75,7 @@ class SymphogearPlayerTest {
                                                         .firstHitMoney(4000)
                                                         .firstHitRound(100)
                                                         .build();
-      SymphogearPlayer testTarget = playUntilFirstHit();
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
       FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
 
       assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
@@ -86,10 +86,13 @@ class SymphogearPlayerTest {
     @Test
     void Playerは大当り取得後_99パーセントの確率で3Rの出玉を取得でき_最終決戦へ突入する() {
 
-      SymphogearPlayer testTarget = playUntilFirstHit();
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
 
       int expected = 390;
-      int actual = testTarget.getBall3RBetweenLastBattle();
+      int actual = testTarget.getHavingBall();
       assertEquals(expected, actual);
     }
 
@@ -98,7 +101,7 @@ class SymphogearPlayerTest {
 
     }
 
-    private SymphogearPlayer playUntilFirstHit() {
+    private SymphogearPlayer setupAndCretePlayerInstance() {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
       RateCalculator spyRateCalculator = spy(new RateCalculator());

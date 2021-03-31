@@ -75,8 +75,8 @@ public class SymphogearPlayer {
                               .build();
   }
 
-  public int getBall3RBetweenLastBattle() {
-    return 390;
+  public void playGetRoundAfterFirstHit() {
+    havingBall += 390;
   }
 
   public int getHavingBall() {
