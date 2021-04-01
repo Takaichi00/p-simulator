@@ -86,4 +86,11 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
+
+  public void playLastBattle() {
+  }
+
+  public PlayerStatus getStatus() {
+    return PlayerStatus.FINISH;
+  }
 }

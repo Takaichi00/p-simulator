@@ -84,7 +84,7 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは大当り取得後_99パーセントの確率で3Rの出玉を取得でき_最終決戦へ突入する() {
+    void Playerは大当り取得後_出玉減り率が0の場合_99パーセントの確率で3R_390_の出玉を取得でき_最終決戦へ突入する() {
 
       SymphogearPlayer testTarget = setupAndCretePlayerInstance();
 
@@ -97,8 +97,22 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは大当り取得後_最終決戦を実施して突破できなかった場合_遊戯をやめて消費玉と消費金額と回転数を取得できる() {
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破できなかった場合_遊戯をやめて保持している玉を取得できる() {
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
 
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      testTarget.playLastBattle();
+
+      int expectedHavingBall = 390;
+      PlayerStatus expectedPlayerStatus = PlayerStatus.FINISH;
+
+      int actualHavingBall = testTarget.getHavingBall();
+      PlayerStatus actualPlayerStatus = testTarget.getStatus();
+
+      assertEquals(expectedHavingBall, actualHavingBall);
+      assertEquals(expectedPlayerStatus, actualPlayerStatus);
     }
 
     private SymphogearPlayer setupAndCretePlayerInstance() {
