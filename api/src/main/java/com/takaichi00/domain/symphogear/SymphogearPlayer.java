@@ -12,6 +12,7 @@ public class SymphogearPlayer {
 
   private int havingBall = 0;
   private int useMoney = 0;
+  private PlayerStatus playerStatus = PlayerStatus.BEFORE_PLAY;
 
   private SymphogearPlayer(SymphogearMachine symphogearMachine, int roundPer1000yen) {
     this.symphogearMachine = symphogearMachine;
@@ -43,7 +44,6 @@ public class SymphogearPlayer {
   }
 
   public int putBallUntilInNavel() {
-
     int consumeBallUntilInNavel = 0;
     do {
       if (havingBall == 0) {
@@ -59,6 +59,8 @@ public class SymphogearPlayer {
 
 
   public FirstHitInformation playSymphogearUntilFirstHit() {
+
+    playerStatus = PlayerStatus.PLAYING;
 
     int consumeBallUntilHit = 0;
     int round = 0;
@@ -88,9 +90,10 @@ public class SymphogearPlayer {
   }
 
   public void playLastBattle() {
+    playerStatus = PlayerStatus.FINISH;
   }
 
   public PlayerStatus getStatus() {
-    return PlayerStatus.FINISH;
+    return playerStatus;
   }
 }
