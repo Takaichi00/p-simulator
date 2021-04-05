@@ -81,6 +81,15 @@ public class SymphogearPlayer {
     havingBall += 390;
   }
 
+
+  public void playLastBattle() {
+    symphogearMachine.lastBattle();
+    SymphogearModeStatus lastBattleResult = symphogearMachine.getModeStatus();
+    if (SymphogearModeStatus.NORMAL.equals(lastBattleResult)) {
+      playerStatus = PlayerStatus.FINISH;
+    }
+  }
+
   public int getHavingBall() {
     return havingBall;
   }
@@ -88,11 +97,6 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
-
-  public void playLastBattle() {
-    playerStatus = PlayerStatus.FINISH;
-  }
-
   public PlayerStatus getStatus() {
     return playerStatus;
   }

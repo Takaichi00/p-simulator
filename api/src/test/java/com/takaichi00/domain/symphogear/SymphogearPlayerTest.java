@@ -145,6 +145,8 @@ class SymphogearPlayerTest {
       when(symphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
+      when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.NORMAL);
+
       return testTarget;
 
     }
