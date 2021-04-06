@@ -13,12 +13,12 @@ public class SymphogearMachine {
 
   private SymphogearModeStatus symphogearModeStatus;
 
-  SymphogearMachine() {
+  public SymphogearMachine() {
     rateCalculator = new RateCalculator();
     symphogearModeStatus = SymphogearModeStatus.NORMAL;
   }
 
-  SymphogearMachine(RateCalculator rateCalculator) {
+  public SymphogearMachine(RateCalculator rateCalculator) {
     this.rateCalculator = rateCalculator;
     symphogearModeStatus = SymphogearModeStatus.NORMAL;
   }
