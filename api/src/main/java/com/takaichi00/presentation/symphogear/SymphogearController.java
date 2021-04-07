@@ -34,10 +34,10 @@ public class SymphogearController {
 
     SymphogearResultResponse response =
         SymphogearResultResponse.builder()
-                                .investmentYen(5000)
-                                .collectionBall(2000)
-                                .collectionYen(7200)
-                                .balanceResultYen(2200)
+                                .investmentYen(hitResultModel.getInvestmentYen())
+                                .collectionBall(hitResultModel.getCollectionBall())
+                                .collectionYen(hitResultModel.getCollectionYen())
+                                .balanceResultYen(hitResultModel.getBalanceResultYen())
                                 .firstHit(hitResultModel.getFirstHit())
                                 .continuousHitCount(hitResultModel.getContinuousHitCount())
                                 .roundAllocations(hitResultModel.getRoundAllocations())
