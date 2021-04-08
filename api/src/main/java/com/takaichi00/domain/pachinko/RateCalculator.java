@@ -1,5 +1,6 @@
 package com.takaichi00.domain.pachinko;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class RateCalculator {
@@ -7,7 +8,7 @@ public class RateCalculator {
   private final Random random;
 
   public RateCalculator() {
-    random = new Random();
+    random = new SecureRandom();
   }
 
   public RateCalculator(Random originalRandom) {
