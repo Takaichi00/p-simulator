@@ -1,8 +1,13 @@
 package com.takaichi00.application.symphogear;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
+import com.takaichi00.domain.symphogear.FirstHitInformation;
 import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
+import com.takaichi00.domain.symphogear.SymphogearMachine;
+import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +40,17 @@ class SymphogearServiceImplTest {
 
   @Test
   void _1回の初当たり情報を取得して返却することができる() {
+    SymphogearPlayer spySymphogearPlayer = spy(SymphogearPlayer.of(new SymphogearMachine(), 20));
+    when(pachinkoPlayerCreator.createPlayer(20)).thenReturn(spySymphogearPlayer);
+
+    FirstHitInformation mockFirstHitInformation = FirstHitInformation.builder()
+                                                                     .firstHitBall(1250)
+                                                                     .firstHitMoney(5000)
+                                                                     .firstHitRound(100)
+                                                                     .build();
+    when(spySymphogearPlayer.playSymphogearUntilFirstHit()).thenReturn(mockFirstHitInformation);
+    when(spySymphogearPlayer.getHavingBall()).thenReturn(2000);
+
     HitInputModel hitInputModel = HitInputModel.builder()
                                                .rotationRatePer1000yen(20)
                                                .changeRate(BigDecimal.valueOf(3.6))
@@ -45,8 +61,8 @@ class SymphogearServiceImplTest {
 
     assertEquals(5000, actual.getInvestmentYen());
     assertEquals(2000, actual.getCollectionBall());
-    assertEquals(7200, actual.getCollectionYen());
-    assertEquals(2200, actual.getBalanceResultYen());
+    assertEquals(7000, actual.getCollectionYen());
+    assertEquals(2000, actual.getBalanceResultYen());
     assertEquals(100, actual.getFirstHit());
     assertEquals(3, actual.getContinuousHitCount());
     assertEquals(Arrays.asList("4R", "10R", "10R"), actual.getRoundAllocations());
