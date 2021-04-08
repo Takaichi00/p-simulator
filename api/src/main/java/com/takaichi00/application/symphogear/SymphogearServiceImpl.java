@@ -5,19 +5,23 @@ import com.takaichi00.domain.pachinko.PachinkoStore;
 import com.takaichi00.domain.pachinko.Prize;
 import com.takaichi00.domain.pachinko.PrizeRateInformation;
 import com.takaichi00.domain.symphogear.FirstHitInformation;
-import com.takaichi00.domain.symphogear.SymphogearMachine;
+import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import java.util.Arrays;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 @ApplicationScoped
 public class SymphogearServiceImpl implements SymphogearService {
+
+  @Inject
+  PachinkoPlayerCreator pachinkoPlayerCreator;
+
   @Override
   public HitResultModel getHitInformation(HitInputModel hitInputModel) {
 
-    SymphogearMachine symphogearMachine = new SymphogearMachine();
-    SymphogearPlayer symphogearPlayer = SymphogearPlayer.of(symphogearMachine,
-        hitInputModel.getRotationRatePer1000yen());
+    SymphogearPlayer symphogearPlayer
+        = pachinkoPlayerCreator.createPlayer(hitInputModel.getRotationRatePer1000yen());
 
     FirstHitInformation firstHitInformation = symphogearPlayer.playSymphogearUntilFirstHit();
     symphogearPlayer.playGetRoundAfterFirstHit();
