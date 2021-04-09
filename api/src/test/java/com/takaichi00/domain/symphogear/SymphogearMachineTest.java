@@ -134,7 +134,6 @@ class SymphogearMachineTest {
   @DisplayName("シンフォギアチャンス GX")
   class SymphogearChanceGx {
 
-
   }
 
 }

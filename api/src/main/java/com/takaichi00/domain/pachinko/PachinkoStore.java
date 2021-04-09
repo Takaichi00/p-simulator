@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 public class PachinkoStore {
 
   private final PrizeRateInformation prizeRateInformation;
-  private final Double rate;
+  private final double rate;
 
-  public static PachinkoStore of(PrizeRateInformation prizeRateInformation, Double rate) {
+  public static PachinkoStore of(PrizeRateInformation prizeRateInformation, double rate) {
     return new PachinkoStore(prizeRateInformation, rate);
   }
 

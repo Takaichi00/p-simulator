@@ -1,8 +1,5 @@
-package com.takaichi00.domain.symphogear;
+package com.takaichi00.domain.pachinko;
 
-import com.takaichi00.domain.pachinko.ConversionCenter;
-import com.takaichi00.domain.pachinko.Prize;
-import com.takaichi00.domain.pachinko.PrizeRateInformation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
