@@ -57,4 +57,15 @@ public class SymphogearMachine {
   public int outBallBy500Yen() {
     return OUT_BALL_COUNT_BY_500YEN;
   }
+
+  public void roundAllocationGx() {
+  }
+
+  public int getBallByGx() {
+    return 520;
+  }
+
+  public int getRotationGx() {
+    return 7;
+  }
 }

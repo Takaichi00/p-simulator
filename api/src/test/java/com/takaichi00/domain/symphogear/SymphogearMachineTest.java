@@ -96,7 +96,7 @@ class SymphogearMachineTest {
     void xxxの確率を5回抽選しもし1回以上大当りが獲得できたらシンフォギアチャンスGXに突入する() {
 
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
-      SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
+      testTarget = new SymphogearMachine(rateCalculator);
 
       when(rateCalculator.calculate(10,76)).thenReturn(false,
                                                                           false,
@@ -115,7 +115,7 @@ class SymphogearMachineTest {
     void xxxの確率を5回抽選しもしもし一回も大当りが獲得できなければ通常時に戻る() {
 
       RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
-      SymphogearMachine testTarget = new SymphogearMachine(rateCalculator);
+      testTarget = new SymphogearMachine(rateCalculator);
 
       when(rateCalculator.calculate(10,76)).thenReturn(false,
                                                                           false,
@@ -134,6 +134,26 @@ class SymphogearMachineTest {
   @DisplayName("シンフォギアチャンス GX")
   class SymphogearChanceGx {
 
+    @Nested
+    @DisplayName("最終決戦もしくはシンフォギアチャンス GX からシンフォギアチャンス GX に突入した場合")
+    class normalGX {
+
+      @Test
+      void ラウンド振り分けを実施し_45パーセントの確率で4R_7回転の振り分けになる() {
+
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        int expectedGetBall = 520;
+        int expectedRotation = 7;
+
+        testTarget.roundAllocationGx();
+        int actualGetBall = testTarget.getBallByGx();
+        int actualRotation = testTarget.getRotationGx();
+        assertEquals(expectedGetBall, actualGetBall);
+        assertEquals(expectedRotation, actualRotation);
+      }
+    }
   }
 
 }
