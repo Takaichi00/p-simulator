@@ -146,9 +146,9 @@ class SymphogearMachineTest {
 
         when(rateCalculator.calculate(10,76)).thenReturn(false,
                                                                             false,
-                                                                            false,
-                                                                            false,
-                                                                            true);
+                                                                                 false,
+                                                                                 false,
+                                                                                 true);
         testTarget.lastBattle();
 
         when(rateCalculator.calculate(45,100)).thenReturn(true);
@@ -161,6 +161,68 @@ class SymphogearMachineTest {
         int actualRotation = testTarget.getRotationGx();
         assertEquals(expectedGetBall, actualGetBall);
         assertEquals(expectedRotation, actualRotation);
+      }
+
+      @Test
+      void ラウンド振り分け分の抽選を実施し_当選したらシンフォギアチャンスGXが継続する() {
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+                                                                            false,
+                                                                                 false,
+                                                                                 false,
+                                                                                 true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(true);
+        testTarget.roundAllocationGx();
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+                                                                            false,
+                                                                                 false,
+                                                                                 false,
+                                                                                 false,
+                                                                                 false,
+                                                                                 true);
+
+        testTarget.gxBattle();
+
+        SymphogearModeStatus actual = testTarget.getModeStatus();
+        SymphogearModeStatus expected = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
+        assertEquals(expected, actual);
+
+      }
+
+      @Test
+      void ラウンド振り分け分の抽選を実施し_当選しなかったら通常時に戻る() {
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(true);
+        testTarget.roundAllocationGx();
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false);
+
+        testTarget.gxBattle();
+
+        SymphogearModeStatus actual = testTarget.getModeStatus();
+        SymphogearModeStatus expected = SymphogearModeStatus.NORMAL;
+        assertEquals(expected, actual);
+
       }
     }
   }

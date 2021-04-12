@@ -71,10 +71,28 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_4R.equals(symphogearModeStatus)) {
       return 520;
     }
-    return 0;
+    return 520;
   }
 
   public int getRotationGx() {
+    if (SymphogearModeStatus.CHANCE_GX_4R.equals(symphogearModeStatus)) {
+      return 7;
+    }
     return 7;
+  }
+
+  public void gxBattle() {
+    int hitCount = 0;
+    for (int i = 0; i < getRotationGx(); ++i) {
+      if (rateCalculator.calculate(10, 76)) {
+        ++hitCount;
+      }
+    }
+    if (hitCount > 0) {
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
+    } else {
+      symphogearModeStatus = SymphogearModeStatus.NORMAL;
+    }
+
   }
 }
