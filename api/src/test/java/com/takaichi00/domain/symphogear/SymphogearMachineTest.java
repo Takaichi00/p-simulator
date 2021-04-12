@@ -66,7 +66,7 @@ class SymphogearMachineTest {
       int actual = testTarget.getHitRoundCount();
       assertEquals(expected, actual);
 
-      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
       SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
@@ -81,7 +81,7 @@ class SymphogearMachineTest {
 
       assertEquals(expectedHitRoundCount, actualHitRoundCount);
 
-      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.LAST_BUTTLE;
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.LAST_BATTLE;
       SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
@@ -104,7 +104,7 @@ class SymphogearMachineTest {
                                                                                false,
                                                                                true);
 
-      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX;
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
       testTarget.lastBattle();
       SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
@@ -144,6 +144,15 @@ class SymphogearMachineTest {
         RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
         testTarget = new SymphogearMachine(rateCalculator);
 
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+                                                                            false,
+                                                                            false,
+                                                                            false,
+                                                                            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(true);
+
         int expectedGetBall = 520;
         int expectedRotation = 7;
 
@@ -155,5 +164,4 @@ class SymphogearMachineTest {
       }
     }
   }
-
 }

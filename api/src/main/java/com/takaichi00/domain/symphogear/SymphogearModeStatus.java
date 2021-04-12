@@ -1,7 +1,8 @@
 package com.takaichi00.domain.symphogear;
 
-public enum  SymphogearModeStatus {
+public enum SymphogearModeStatus {
   NORMAL,
-  LAST_BUTTLE,
-  CHANCE_GX
+  LAST_BATTLE,
+  CHANCE_GX_BEFORE_ALLOCATION,
+  CHANCE_GX_4R
 }

@@ -29,10 +29,10 @@ public class SymphogearMachine {
 
   public int getHitRoundCount() {
     if (rateCalculator.calculate(1, 100)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
       return ROUND_COUNT_10R;
     }
-    symphogearModeStatus = SymphogearModeStatus.LAST_BUTTLE;
+    symphogearModeStatus = SymphogearModeStatus.LAST_BATTLE;
     return ROUND_COUNT_3R;
   }
 
@@ -48,7 +48,7 @@ public class SymphogearMachine {
       }
     }
     if (hitCount > 0) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
     } else {
       symphogearModeStatus = SymphogearModeStatus.NORMAL;
     }
@@ -59,10 +59,19 @@ public class SymphogearMachine {
   }
 
   public void roundAllocationGx() {
+    if (!SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION.equals(symphogearModeStatus)) {
+      return;
+    }
+    if (rateCalculator.calculate(45, 100)) {
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_4R;
+    }
   }
 
   public int getBallByGx() {
-    return 520;
+    if (SymphogearModeStatus.CHANCE_GX_4R.equals(symphogearModeStatus)) {
+      return 520;
+    }
+    return 0;
   }
 
   public int getRotationGx() {
