@@ -164,6 +164,31 @@ class SymphogearMachineTest {
       }
 
       @Test
+      void ラウンド振り分けを実施し_36パーセントの確率で10R_7回転の振り分けになる() {
+
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(36,55)).thenReturn(true);
+
+        int expectedGetBall = 1300;
+        int expectedRotation = 7;
+
+        testTarget.roundAllocationGx();
+        int actualGetBall = testTarget.getBallByGx();
+        int actualRotation = testTarget.getRotationGx();
+        assertEquals(expectedGetBall, actualGetBall);
+        assertEquals(expectedRotation, actualRotation);
+      }
+
+      @Test
       void ラウンド振り分け分の抽選を実施し_当選したらシンフォギアチャンスGXが継続する() {
         RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
         testTarget = new SymphogearMachine(rateCalculator);

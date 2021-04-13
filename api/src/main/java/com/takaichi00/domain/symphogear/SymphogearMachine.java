@@ -64,12 +64,20 @@ public class SymphogearMachine {
     }
     if (rateCalculator.calculate(45, 100)) {
       symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_4R;
+      return;
+    }
+    if (rateCalculator.calculate(36, 55)) {
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_7ROTATION;
+      return;
     }
   }
 
   public int getBallByGx() {
     if (SymphogearModeStatus.CHANCE_GX_4R.equals(symphogearModeStatus)) {
       return 520;
+    }
+    if (SymphogearModeStatus.CHANCE_GX_10R_7ROTATION.equals(symphogearModeStatus)) {
+      return 1300;
     }
     return 520;
   }
@@ -78,6 +86,11 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_4R.equals(symphogearModeStatus)) {
       return 7;
     }
+
+    if (SymphogearModeStatus.CHANCE_GX_10R_7ROTATION.equals(symphogearModeStatus)) {
+      return 7;
+    }
+
     return 7;
   }
 
