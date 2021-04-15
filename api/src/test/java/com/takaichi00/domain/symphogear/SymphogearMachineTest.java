@@ -217,6 +217,92 @@ class SymphogearMachineTest {
       }
 
       @Test
+      void ラウンド振り分けを実施し_3パーセントの確率で10R_11回転の振り分けになる() {
+
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(false);
+        when(rateCalculator.calculate(36,55)).thenReturn(false);
+        when(rateCalculator.calculate(11,19)).thenReturn(false);
+        when(rateCalculator.calculate(3,8)).thenReturn(true);
+
+        int expectedGetBall = 1300;
+        int expectedRotation = 11;
+
+        testTarget.roundAllocationGx();
+        int actualGetBall = testTarget.getBallByGx();
+        int actualRotation = testTarget.getRotationGx();
+        assertEquals(expectedGetBall, actualGetBall);
+        assertEquals(expectedRotation, actualRotation);
+      }
+
+      @Test
+      void ラウンド振り分けを実施し_3パーセントの確率で6R_7回転の振り分けになる() {
+
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(false);
+        when(rateCalculator.calculate(36,55)).thenReturn(false);
+        when(rateCalculator.calculate(11,19)).thenReturn(false);
+        when(rateCalculator.calculate(3,8)).thenReturn(false);
+        when(rateCalculator.calculate(3,5)).thenReturn(true);
+
+        int expectedGetBall = 780;
+        int expectedRotation = 7;
+
+        testTarget.roundAllocationGx();
+        int actualGetBall = testTarget.getBallByGx();
+        int actualRotation = testTarget.getRotationGx();
+        assertEquals(expectedGetBall, actualGetBall);
+        assertEquals(expectedRotation, actualRotation);
+      }
+
+      @Test
+      void ラウンド振り分けを実施し_2パーセントの確率で7R_7回転の振り分けになる() {
+
+        RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
+        testTarget = new SymphogearMachine(rateCalculator);
+
+        when(rateCalculator.calculate(10,76)).thenReturn(false,
+            false,
+            false,
+            false,
+            true);
+        testTarget.lastBattle();
+
+        when(rateCalculator.calculate(45,100)).thenReturn(false);
+        when(rateCalculator.calculate(36,55)).thenReturn(false);
+        when(rateCalculator.calculate(11,19)).thenReturn(false);
+        when(rateCalculator.calculate(3,8)).thenReturn(false);
+        when(rateCalculator.calculate(3,5)).thenReturn(false);
+
+        int expectedGetBall = 910;
+        int expectedRotation = 7;
+
+        testTarget.roundAllocationGx();
+        int actualGetBall = testTarget.getBallByGx();
+        int actualRotation = testTarget.getRotationGx();
+        assertEquals(expectedGetBall, actualGetBall);
+        assertEquals(expectedRotation, actualRotation);
+      }
+
+      @Test
       void ラウンド振り分け分の抽選を実施し_当選したらシンフォギアチャンスGXが継続する() {
         RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
         testTarget = new SymphogearMachine(rateCalculator);
