@@ -88,6 +88,9 @@ public class SymphogearPlayer {
     if (SymphogearModeStatus.NORMAL.equals(lastBattleResult)) {
       playerStatus = PlayerStatus.FINISH;
     }
+    if (SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION.equals(lastBattleResult)) {
+      playerStatus = PlayerStatus.PLAY_GX;
+    }
   }
 
   public int getHavingBall() {

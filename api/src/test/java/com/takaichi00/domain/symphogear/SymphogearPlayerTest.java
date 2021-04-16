@@ -75,7 +75,7 @@ class SymphogearPlayerTest {
                                                         .firstHitMoney(4000)
                                                         .firstHitRound(100)
                                                         .build();
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
       FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
 
       assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
@@ -86,7 +86,7 @@ class SymphogearPlayerTest {
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_99パーセントの確率で3R_390_の出玉を取得でき_最終決戦へ突入する() {
 
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -98,7 +98,7 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破できなかった場合_遊戯をやめて保持している玉を取得できる() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance();
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -115,7 +115,22 @@ class SymphogearPlayerTest {
       assertEquals(expectedPlayerStatus, actualPlayerStatus);
     }
 
-    private SymphogearPlayer setupAndCretePlayerInstance() {
+    @Test
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイする() {
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      testTarget.playLastBattle();
+
+      PlayerStatus expectedPlayerStatus = PlayerStatus.PLAY_GX;
+      PlayerStatus actualPlayerStatus = testTarget.getStatus();
+
+      assertEquals(expectedPlayerStatus, actualPlayerStatus);
+    }
+
+    private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
       RateCalculator spyRateCalculator = spy(new RateCalculator());
@@ -145,7 +160,13 @@ class SymphogearPlayerTest {
       when(symphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
-      when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.NORMAL);
+      if (!winLastBattle) {
+        when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.NORMAL);
+      }
+
+      if (winLastBattle) {
+        when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION);
+      }
 
       return testTarget;
 
