@@ -130,6 +130,21 @@ class SymphogearPlayerTest {
       assertEquals(expectedPlayerStatus, actualPlayerStatus);
     }
 
+    @Test
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_保持玉910を持っている() {
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      testTarget.playLastBattle();
+      testTarget.playRoundAllocationAndRound();
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 910;
+      assertEquals(expectedHavingBall, actualHavingBall);
+    }
+
     private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資

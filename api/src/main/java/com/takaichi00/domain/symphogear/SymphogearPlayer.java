@@ -103,4 +103,8 @@ public class SymphogearPlayer {
   public PlayerStatus getStatus() {
     return playerStatus;
   }
+
+  public void playRoundAllocationAndRound() {
+    havingBall += 520;
+  }
 }
