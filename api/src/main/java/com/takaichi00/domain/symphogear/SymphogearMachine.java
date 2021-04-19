@@ -60,7 +60,7 @@ public class SymphogearMachine {
 
   public void roundAllocationGx() {
     if (!SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION.equals(symphogearModeStatus)) {
-      return;
+      throw new RuntimeException("is not status CHANCE_GX_BEFORE_ALLOCATION");
     }
     if (rateCalculator.calculate(45, 100)) {
       symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_4R_7ROTATION;

@@ -116,21 +116,6 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイする() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
-
-      testTarget.playSymphogearUntilFirstHit();
-      testTarget.playGetRoundAfterFirstHit();
-
-      testTarget.playLastBattle();
-
-      PlayerStatus expectedPlayerStatus = PlayerStatus.PLAY_GX;
-      PlayerStatus actualPlayerStatus = testTarget.getStatus();
-
-      assertEquals(expectedPlayerStatus, actualPlayerStatus);
-    }
-
-    @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_保持玉910を持っている() {
       SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
 
@@ -149,10 +134,10 @@ class SymphogearPlayerTest {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
       RateCalculator spyRateCalculator = spy(new RateCalculator());
-      SymphogearMachine symphogearMachine = spy(new SymphogearMachine());
-      SymphogearPlayer testTarget = SymphogearPlayer.of(symphogearMachine,
-          ROUND_PER_1000YEN,
-          spyRateCalculator);
+      SymphogearMachine spySymphogearMachine = spy(new SymphogearMachine(spyRateCalculator));
+      SymphogearPlayer testTarget = SymphogearPlayer.of(spySymphogearMachine,
+                                                        ROUND_PER_1000YEN,
+                                                        spyRateCalculator);
 
       // へそに入れる確率をモック
       List<Boolean> inNavelMockBoolean = new ArrayList<>();
@@ -172,16 +157,17 @@ class SymphogearPlayerTest {
           .thenReturn(false, inNavelMockBoolean.toArray(new Boolean[inNavelMockBoolean.size()]));
 
       // 大当りの確率をモック
-      when(symphogearMachine.drawLots())
+      when(spySymphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
-      if (!winLastBattle) {
-        when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.NORMAL);
+      if (winLastBattle) {
+        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, true);
+      } else {
+        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false);
       }
 
-      if (winLastBattle) {
-        when(symphogearMachine.getModeStatus()).thenReturn(SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION);
-      }
+      // 振り分けをモック
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(true);
 
       return testTarget;
 

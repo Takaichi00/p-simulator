@@ -105,6 +105,7 @@ public class SymphogearPlayer {
   }
 
   public void playRoundAllocationAndRound() {
-    havingBall += 520;
+    symphogearMachine.roundAllocationGx();
+    havingBall += symphogearMachine.getBallByGx();
   }
 }
