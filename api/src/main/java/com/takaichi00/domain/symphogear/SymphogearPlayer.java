@@ -89,7 +89,7 @@ public class SymphogearPlayer {
       playerStatus = PlayerStatus.FINISH;
     }
     if (SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION.equals(lastBattleResult)) {
-      playerStatus = PlayerStatus.PLAY_GX;
+      playerStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
     }
   }
 
@@ -100,12 +100,34 @@ public class SymphogearPlayer {
   public int getUseMoney() {
     return useMoney;
   }
+
   public PlayerStatus getStatus() {
     return playerStatus;
   }
 
   public void playRoundAllocationAndRound() {
+    if (!PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND.equals(playerStatus)) {
+      throw new RuntimeException("player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
+    }
     symphogearMachine.roundAllocationGx();
     havingBall += symphogearMachine.getBallByGx();
+    playerStatus = PlayerStatus.PLAY_GX;
+  }
+
+  public void playGx() {
+    if (!PlayerStatus.PLAY_GX.equals(playerStatus)) {
+      throw new RuntimeException("player's status is not PLAY_GX. status is " + playerStatus);
+    }
+    symphogearMachine.gxBattle();
+    if (SymphogearModeStatus.NORMAL.equals(symphogearMachine.getModeStatus())) {
+      playerStatus = PlayerStatus.FINISH;
+      return;
+    }
+    if (SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION
+        .equals(symphogearMachine.getModeStatus())) {
+      playerStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
+      return;
+    }
+    throw new RuntimeException("unexpected error has occurred");
   }
 }

@@ -130,6 +130,26 @@ class SymphogearPlayerTest {
       assertEquals(expectedHavingBall, actualHavingBall);
     }
 
+    @Test
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_一つも当たらなかった場合はゲームを終了する() {
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      testTarget.playLastBattle();
+      testTarget.playRoundAllocationAndRound();
+      testTarget.playGx();
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 910;
+      assertEquals(expectedHavingBall, actualHavingBall);
+
+      PlayerStatus expectedStatus = PlayerStatus.FINISH;
+      PlayerStatus actualStatus = testTarget.getStatus();
+      assertEquals(expectedStatus, actualStatus);
+    }
+
     private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
@@ -160,8 +180,9 @@ class SymphogearPlayerTest {
       when(spySymphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
+      // 最終決戦をモック
       if (winLastBattle) {
-        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, true);
+        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, true, false, false, false, false, false, false, false);
       } else {
         when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false);
       }
