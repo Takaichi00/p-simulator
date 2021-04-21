@@ -1,6 +1,7 @@
 package com.takaichi00.domain.symphogear;
 
 import com.takaichi00.domain.pachinko.RateCalculator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,15 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 class SymphogearPlayerTest {
+
+  private RateCalculator spyRateCalculator;
+  private SymphogearMachine spySymphogearMachine;
+
+  @BeforeEach
+  void setup() {
+    spyRateCalculator = spy(new RateCalculator());
+    spySymphogearMachine = spy(new SymphogearMachine(spyRateCalculator));
+  }
 
   @Nested
   class Playerは1000円あたり20回転でシンフォチアを打つ能力をもつ場合 {
@@ -49,7 +59,6 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは0玉を所持している場合_500円を消費して125玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる() {
-      RateCalculator spyRateCalculator = spy(new RateCalculator());
       SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
       
       when(spyRateCalculator.calculate(20, 250))
@@ -139,6 +148,10 @@ class SymphogearPlayerTest {
 
       testTarget.playLastBattle();
       testTarget.playRoundAllocationAndRound();
+
+      // GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, false);
+
       testTarget.playGx();
 
       int actualHavingBall = testTarget.getHavingBall();
@@ -153,8 +166,6 @@ class SymphogearPlayerTest {
     private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
-      RateCalculator spyRateCalculator = spy(new RateCalculator());
-      SymphogearMachine spySymphogearMachine = spy(new SymphogearMachine(spyRateCalculator));
       SymphogearPlayer testTarget = SymphogearPlayer.of(spySymphogearMachine,
                                                         ROUND_PER_1000YEN,
                                                         spyRateCalculator);
@@ -182,7 +193,7 @@ class SymphogearPlayerTest {
 
       // 最終決戦をモック
       if (winLastBattle) {
-        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, true, false, false, false, false, false, false, false);
+        when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, true);
       } else {
         when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false);
       }
