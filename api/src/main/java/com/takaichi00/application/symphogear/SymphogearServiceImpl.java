@@ -6,6 +6,7 @@ import com.takaichi00.domain.pachinko.Prize;
 import com.takaichi00.domain.pachinko.PrizeRateInformation;
 import com.takaichi00.domain.symphogear.FirstHitInformation;
 import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
+import com.takaichi00.domain.symphogear.PlayerStatus;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import java.util.Arrays;
 import javax.enterprise.context.ApplicationScoped;
@@ -27,6 +28,13 @@ public class SymphogearServiceImpl implements SymphogearService {
     symphogearPlayer.playGetRoundAfterFirstHit();
     symphogearPlayer.playLastBattle();
 
+    int continuousCount = 1;
+    while (!PlayerStatus.FINISH.equals(symphogearPlayer.getStatus())) {
+      ++continuousCount;
+      symphogearPlayer.playRoundAllocationAndRound();
+      symphogearPlayer.playGx();
+    }
+
     int resultBall = symphogearPlayer.getHavingBall();
 
     PrizeRateInformation prizeRateInformation
@@ -46,7 +54,7 @@ public class SymphogearServiceImpl implements SymphogearService {
                          .collectionYen(resultYen)
                          .balanceResultYen(resultYen - firstHitInformation.getFirstHitMoney())
                          .firstHit(firstHitInformation.getFirstHitRound())
-                         .continuousHitCount(3)
+                         .continuousHitCount(continuousCount)
                          .roundAllocations(Arrays.asList("4R", "10R", "10R"))
                          .build();
   }

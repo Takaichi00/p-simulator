@@ -1,11 +1,13 @@
 package com.takaichi00.application.symphogear;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.takaichi00.domain.symphogear.FirstHitInformation;
 import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
+import com.takaichi00.domain.symphogear.PlayerStatus;
 import com.takaichi00.domain.symphogear.SymphogearMachine;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import org.junit.jupiter.api.AfterEach;
@@ -50,6 +52,11 @@ class SymphogearServiceImplTest {
                                                                      .build();
     when(spySymphogearPlayer.playSymphogearUntilFirstHit()).thenReturn(mockFirstHitInformation);
     when(spySymphogearPlayer.getHavingBall()).thenReturn(2000);
+    doNothing().when(spySymphogearPlayer).playRoundAllocationAndRound();
+    doNothing().when(spySymphogearPlayer).playGx();
+    when(spySymphogearPlayer.getStatus()).thenReturn(PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND,
+                                                     PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND,
+                                                     PlayerStatus.FINISH);
 
     HitInputModel hitInputModel = HitInputModel.builder()
                                                .rotationRatePer1000yen(20)
