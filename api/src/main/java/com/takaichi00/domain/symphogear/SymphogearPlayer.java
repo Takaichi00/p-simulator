@@ -3,6 +3,10 @@ package com.takaichi00.domain.symphogear;
 import com.takaichi00.domain.pachinko.RateCalculator;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @EqualsAndHashCode
 public class SymphogearPlayer {
 
@@ -13,6 +17,7 @@ public class SymphogearPlayer {
   private int havingBall = 0;
   private int useMoney = 0;
   private PlayerStatus playerStatus = PlayerStatus.BEFORE_PLAY;
+  private List<String> roundHistory = new ArrayList<>();
 
   private SymphogearPlayer(SymphogearMachine symphogearMachine, int roundPer1000yen) {
     this.symphogearMachine = symphogearMachine;
@@ -78,6 +83,7 @@ public class SymphogearPlayer {
   }
 
   public void playGetRoundAfterFirstHit() {
+    roundHistory.add("3R");
     havingBall += 390;
   }
 
@@ -110,6 +116,17 @@ public class SymphogearPlayer {
       throw new RuntimeException("player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
     }
     symphogearMachine.roundAllocationGx();
+
+    if (SymphogearModeStatus.CHANCE_GX_4R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+      roundHistory.add("4R");
+    } else if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+      roundHistory.add("6R");
+    } else if (SymphogearModeStatus.CHANCE_GX_7R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+      roundHistory.add("7R");
+    } else {
+      roundHistory.add("10R");
+    }
+
     havingBall += symphogearMachine.getBallByGx();
     playerStatus = PlayerStatus.PLAY_GX;
   }
@@ -129,5 +146,9 @@ public class SymphogearPlayer {
       return;
     }
     throw new RuntimeException("unexpected error has occurred");
+  }
+
+  public List<String> getRoundHistory() {
+    return roundHistory;
   }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -185,6 +186,68 @@ class SymphogearPlayerTest {
       PlayerStatus expectedStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
       PlayerStatus actualStatus = testTarget.getStatus();
       assertEquals(expectedStatus, actualStatus);
+    }
+
+    @Test
+    void PlayerはPlay終了後_大当たりの履歴を取得できる() {
+
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      testTarget.playLastBattle();
+      testTarget.playRoundAllocationAndRound();
+
+      // 1戦目 GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, true);
+      // 1戦目 GX
+      testTarget.playGx();
+
+      // 6R 振り分け
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(false);
+      when(spyRateCalculator.calculate(36, 55)).thenReturn(false);
+      when(spyRateCalculator.calculate(11, 19)).thenReturn(false);
+      when(spyRateCalculator.calculate(3, 8)).thenReturn(false);
+      when(spyRateCalculator.calculate(3, 5)).thenReturn(true);
+      testTarget.playRoundAllocationAndRound();
+
+
+
+      // 2戦目 GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, true);
+      // 2戦目 GX
+      testTarget.playGx();
+
+      // 7R 振り分け
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(false);
+      when(spyRateCalculator.calculate(36, 55)).thenReturn(false);
+      when(spyRateCalculator.calculate(11, 19)).thenReturn(false);
+      when(spyRateCalculator.calculate(3, 8)).thenReturn(false);
+      when(spyRateCalculator.calculate(3, 5)).thenReturn(false);
+      testTarget.playRoundAllocationAndRound();
+
+
+
+      // 3戦目 GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, true);
+      // 2戦目 GX
+      testTarget.playGx();
+
+      // 10R 振り分け
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(false);
+      when(spyRateCalculator.calculate(36, 55)).thenReturn(true);
+      testTarget.playRoundAllocationAndRound();
+
+
+      // 4戦目 GX をモック (負け)
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, false);
+      // 4戦目 GX
+      testTarget.playGx();
+
+      List<String> expected = Arrays.asList("3R", "4R", "6R", "7R", "10R");
+      List<String> actual = testTarget.getRoundHistory();
+      assertEquals(expected, actual);
     }
 
     private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
