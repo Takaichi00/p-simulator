@@ -58,6 +58,8 @@ class SymphogearServiceImplTest {
                                                      PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND,
                                                      PlayerStatus.FINISH);
 
+    when(spySymphogearPlayer.getRoundHistory()).thenReturn(Arrays.asList("4R", "10R", "10R"));
+
     HitInputModel hitInputModel = HitInputModel.builder()
                                                .rotationRatePer1000yen(20)
                                                .changeRate(BigDecimal.valueOf(3.6))

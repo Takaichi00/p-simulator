@@ -8,7 +8,6 @@ import com.takaichi00.domain.symphogear.FirstHitInformation;
 import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
 import com.takaichi00.domain.symphogear.PlayerStatus;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
-import java.util.Arrays;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -55,7 +54,7 @@ public class SymphogearServiceImpl implements SymphogearService {
                          .balanceResultYen(resultYen - firstHitInformation.getFirstHitMoney())
                          .firstHit(firstHitInformation.getFirstHitRound())
                          .continuousHitCount(continuousCount)
-                         .roundAllocations(Arrays.asList("4R", "10R", "10R"))
+                         .roundAllocations(symphogearPlayer.getRoundHistory())
                          .build();
   }
 }

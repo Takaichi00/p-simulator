@@ -4,7 +4,6 @@ import com.takaichi00.domain.pachinko.RateCalculator;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @EqualsAndHashCode
