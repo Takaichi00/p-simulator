@@ -1,10 +1,9 @@
 package com.takaichi00.domain.symphogear;
 
 import com.takaichi00.domain.pachinko.RateCalculator;
-import lombok.EqualsAndHashCode;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 public class SymphogearPlayer {
@@ -16,7 +15,7 @@ public class SymphogearPlayer {
   private int havingBall = 0;
   private int useMoney = 0;
   private PlayerStatus playerStatus = PlayerStatus.BEFORE_PLAY;
-  private List<String> roundHistory = new ArrayList<>();
+  private final List<String> roundHistory = new ArrayList<>();
 
   private SymphogearPlayer(SymphogearMachine symphogearMachine, int roundPer1000yen) {
     this.symphogearMachine = symphogearMachine;
@@ -98,17 +97,6 @@ public class SymphogearPlayer {
     }
   }
 
-  public int getHavingBall() {
-    return havingBall;
-  }
-
-  public int getUseMoney() {
-    return useMoney;
-  }
-
-  public PlayerStatus getStatus() {
-    return playerStatus;
-  }
 
   public void playRoundAllocationAndRound() {
     if (!PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND.equals(playerStatus)) {
@@ -145,6 +133,18 @@ public class SymphogearPlayer {
       return;
     }
     throw new RuntimeException("unexpected error has occurred");
+  }
+
+  public int getHavingBall() {
+    return havingBall;
+  }
+
+  public int getUseMoney() {
+    return useMoney;
+  }
+
+  public PlayerStatus getStatus() {
+    return playerStatus;
   }
 
   public List<String> getRoundHistory() {

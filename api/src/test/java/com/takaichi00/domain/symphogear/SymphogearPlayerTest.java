@@ -141,7 +141,7 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_一つも当たらなかった場合はゲームを終了する() {
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_GXで一つも当たらなかった場合はゲームを終了する() {
       SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
 
       testTarget.playSymphogearUntilFirstHit();
@@ -165,7 +165,7 @@ class SymphogearPlayerTest {
     }
 
     @Test
-    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_一つあたった場合はGXを継続する() {
+    void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_一つあたった場合はGXを継続し_GXで一つも当たらなかった場合はゲームを終了する() {
       SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
 
       testTarget.playSymphogearUntilFirstHit();
@@ -174,16 +174,25 @@ class SymphogearPlayerTest {
       testTarget.playLastBattle();
       testTarget.playRoundAllocationAndRound();
 
-      // GX をモック
+      // 1戦目GX をモック
       when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, true);
 
       testTarget.playGx();
 
+      // 4R振り分け
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(true);
+      testTarget.playRoundAllocationAndRound();
+
+      // 2戦目 GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, false);
+      // 2戦目 GX
+      testTarget.playGx();
+
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 910;
+      int expectedHavingBall = 1430; // 390 (3R) + 520 (4R) + 520 (4R)
       assertEquals(expectedHavingBall, actualHavingBall);
 
-      PlayerStatus expectedStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
+      PlayerStatus expectedStatus = PlayerStatus.FINISH;
       PlayerStatus actualStatus = testTarget.getStatus();
       assertEquals(expectedStatus, actualStatus);
     }
@@ -303,5 +312,4 @@ class SymphogearPlayerTest {
 
     return value.toArray(new Boolean[value.size()]);
   }
-
 }
