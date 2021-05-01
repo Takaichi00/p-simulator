@@ -100,15 +100,18 @@ public class SymphogearPlayer {
 
   public void playRoundAllocationAndRound() {
     if (!PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND.equals(playerStatus)) {
-      throw new RuntimeException("player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
+      throw new RuntimeException(
+          "player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
     }
     symphogearMachine.roundAllocationGx();
 
     if (SymphogearModeStatus.CHANCE_GX_4R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("4R");
-    } else if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+    } else if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION
+        .equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("6R");
-    } else if (SymphogearModeStatus.CHANCE_GX_7R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+    } else if (SymphogearModeStatus.CHANCE_GX_7R_7ROTATION
+        .equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("7R");
     } else {
       roundHistory.add("10R");
