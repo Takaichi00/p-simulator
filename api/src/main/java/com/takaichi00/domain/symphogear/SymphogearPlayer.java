@@ -81,8 +81,13 @@ public class SymphogearPlayer {
   }
 
   public void playGetRoundAfterFirstHit() {
-    roundHistory.add("3R");
-    havingBall += 390;
+    havingBall += symphogearMachine.getHitRoundCount();
+    // TODO 10Rと3Rで以降の処理を変える
+    if (SymphogearModeStatus.LAST_BATTLE.equals(symphogearMachine.getModeStatus())) {
+      roundHistory.add("3R");
+    } else {
+      roundHistory.add("10R");
+    }
   }
 
 
