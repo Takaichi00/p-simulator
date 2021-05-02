@@ -54,8 +54,8 @@ class SymphogearServiceImplTest {
     when(spySymphogearPlayer.getHavingBall()).thenReturn(2000);
     doNothing().when(spySymphogearPlayer).playRoundAllocationAndRound();
     doNothing().when(spySymphogearPlayer).playGx();
-    when(spySymphogearPlayer.getStatus()).thenReturn(PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND,
-                                                     PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND,
+    when(spySymphogearPlayer.getStatus()).thenReturn(PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND,
+                                                     PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND,
                                                      PlayerStatus.FINISH);
 
     when(spySymphogearPlayer.getRoundHistory()).thenReturn(Arrays.asList("4R", "10R", "10R"));

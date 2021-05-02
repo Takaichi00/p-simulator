@@ -98,13 +98,13 @@ public class SymphogearPlayer {
       playerStatus = PlayerStatus.FINISH;
     }
     if (SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION.equals(lastBattleResult)) {
-      playerStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
+      playerStatus = PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND;
     }
   }
 
 
   public void playRoundAllocationAndRound() {
-    if (!PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND.equals(playerStatus)) {
+    if (!PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND.equals(playerStatus)) {
       throw new RuntimeException(
           "player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
     }
@@ -137,7 +137,7 @@ public class SymphogearPlayer {
     }
     if (SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION
         .equals(symphogearMachine.getModeStatus())) {
-      playerStatus = PlayerStatus.PLAY_GX_ALLOCATIOM_AND_ROUND;
+      playerStatus = PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND;
       return;
     }
     throw new RuntimeException("unexpected error has occurred");
