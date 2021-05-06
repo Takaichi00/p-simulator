@@ -29,7 +29,7 @@ public class SymphogearMachine {
 
   public int getHitRoundCount() {
     if (rateCalculator.calculate(1, 100)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_99ROTATION;
       return ROUND_COUNT_10R;
     }
     symphogearModeStatus = SymphogearModeStatus.LAST_BATTLE;

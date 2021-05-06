@@ -198,6 +198,11 @@ class SymphogearPlayerTest {
     }
 
     @Test
+    void Playerは大当り取得後_出玉減り率が0の場合_10R直撃した場合は_シンフォギアチャンスGXをプレイする() {
+      // TODO
+    }
+
+    @Test
     void PlayerはPlay終了後_大当たりの履歴を取得できる() {
 
       SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
@@ -286,6 +291,11 @@ class SymphogearPlayerTest {
       // 大当りの確率をモック
       when(spySymphogearMachine.drawLots())
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
+
+      // 通常時ラウンド振り分けをモック
+      when(spyRateCalculator.calculate(1, 100))
+          .thenReturn(false);
+
 
       // 最終決戦をモック
       if (winLastBattle) {

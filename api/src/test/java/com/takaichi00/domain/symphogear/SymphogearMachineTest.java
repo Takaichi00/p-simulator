@@ -66,7 +66,7 @@ class SymphogearMachineTest {
       int actual = testTarget.getHitRoundCount();
       assertEquals(expected, actual);
 
-      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_BEFORE_ALLOCATION;
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_10R_99ROTATION;
       SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
