@@ -85,7 +85,7 @@ class SymphogearPlayerTest {
                                                         .firstHitMoney(4000)
                                                         .firstHitRound(100)
                                                         .build();
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, false);
       FirstHitInformation actual = testTarget.playSymphogearUntilFirstHit();
 
       assertEquals(expected.getFirstHitBall(), actual.getFirstHitBall());
@@ -96,7 +96,7 @@ class SymphogearPlayerTest {
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_99パーセントの確率で3R_390_の出玉を取得でき_最終決戦へ突入する() {
 
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, false);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -108,7 +108,7 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破できなかった場合_遊戯をやめて保持している玉を取得できる() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, false);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -127,7 +127,7 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_保持玉910を持っている() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, true);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -142,7 +142,7 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_GXで一つも当たらなかった場合はゲームを終了する() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, true);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -166,7 +166,7 @@ class SymphogearPlayerTest {
 
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_最終決戦を実施して突破した場合_シンフォギアチャンスGXをプレイし_振り分けを実施し_取得した4Rをプレイし_振り分けラウンドを実施し_一つあたった場合はGXを継続し_GXで一つも当たらなかった場合はゲームを終了する() {
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, true);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -200,12 +200,42 @@ class SymphogearPlayerTest {
     @Test
     void Playerは大当り取得後_出玉減り率が0の場合_10R直撃した場合は_シンフォギアチャンスGXをプレイする() {
       // TODO
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true, true);
+
+      testTarget.playSymphogearUntilFirstHit();
+      testTarget.playGetRoundAfterFirstHit();
+
+      // 通常時ラウンド振り分けをモック
+      when(spyRateCalculator.calculate(1, 100)).thenReturn(true);
+
+      testTarget.playRoundAllocationAndRound();
+
+      // 1戦目GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(true);
+      testTarget.playGx();
+
+      // 4R振り分け
+      when(spyRateCalculator.calculate(45, 100)).thenReturn(true);
+      testTarget.playRoundAllocationAndRound();
+
+      // 2戦目 GX をモック
+      when(spyRateCalculator.calculate(10, 76)).thenReturn(false, false, false, false, false, false, false);
+      // 2戦目 GX
+      testTarget.playGx();
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 1820; // 1300 (10R) + 520 (4R)
+      assertEquals(expectedHavingBall, actualHavingBall);
+
+      PlayerStatus expectedStatus = PlayerStatus.FINISH;
+      PlayerStatus actualStatus = testTarget.getStatus();
+      assertEquals(expectedStatus, actualStatus);
     }
 
     @Test
     void PlayerはPlay終了後_大当たりの履歴を取得できる() {
 
-      SymphogearPlayer testTarget = setupAndCretePlayerInstance(true);
+      SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, true);
 
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
@@ -264,7 +294,7 @@ class SymphogearPlayerTest {
       assertEquals(expected, actual);
     }
 
-    private SymphogearPlayer setupAndCretePlayerInstance(boolean winLastBattle) {
+    private SymphogearPlayer setupAndCretePlayerInstance(boolean allRotation, boolean winLastBattle) {
       // 100回転で大当りを獲得する場合
       // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
       SymphogearPlayer testTarget = SymphogearPlayer.of(spySymphogearMachine,
@@ -293,8 +323,11 @@ class SymphogearPlayerTest {
           .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(99));
 
       // 通常時ラウンド振り分けをモック
-      when(spyRateCalculator.calculate(1, 100))
-          .thenReturn(false);
+      if (allRotation) {
+        when(spyRateCalculator.calculate(1, 100)).thenReturn(true);
+      } else {
+        when(spyRateCalculator.calculate(1, 100)).thenReturn(false);
+      }
 
 
       // 最終決戦をモック

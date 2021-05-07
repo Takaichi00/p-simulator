@@ -86,6 +86,7 @@ public class SymphogearPlayer {
     if (SymphogearModeStatus.LAST_BATTLE.equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("3R");
     } else {
+      playerStatus = PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND;
       roundHistory.add("10R");
     }
   }
@@ -106,8 +107,17 @@ public class SymphogearPlayer {
   public void playRoundAllocationAndRound() {
     if (!PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND.equals(playerStatus)) {
       throw new RuntimeException(
-          "player's status is not PLAY_PLAY_GX_ROUND. status is " + playerStatus);
+          "player's status is not PLAY_GX_ALLOCATION_AND_ROUND. status is " + playerStatus);
     }
+
+    if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearMachine.getModeStatus())) {
+      // 通常時からの出玉で10Rを取得しているので不要
+      //      havingBall += symphogearMachine.getBallByGx();
+      //      roundHistory.add("10R");
+      playerStatus = PlayerStatus.PLAY_GX;
+      return;
+    }
+
     symphogearMachine.roundAllocationGx();
 
     if (SymphogearModeStatus.CHANCE_GX_4R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
