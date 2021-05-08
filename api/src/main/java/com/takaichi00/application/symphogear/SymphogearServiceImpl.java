@@ -26,7 +26,9 @@ public class SymphogearServiceImpl implements SymphogearService {
     FirstHitInformation firstHitInformation = symphogearPlayer.playSymphogearUntilFirstHit();
     symphogearPlayer.playGetRoundAfterFirstHit();
     // TODO 10Rと3Rで以降の処理を変える
-    symphogearPlayer.playLastBattle();
+    if (PlayerStatus.PLAY_LAST_BATTLE.equals(symphogearPlayer.getStatus())) {
+      symphogearPlayer.playLastBattle();
+    }
 
     int continuousCount = 1;
     while (!PlayerStatus.FINISH.equals(symphogearPlayer.getStatus())) {

@@ -84,6 +84,7 @@ public class SymphogearPlayer {
     havingBall += symphogearMachine.getHitRoundCount();
     // TODO 10Rと3Rで以降の処理を変える
     if (SymphogearModeStatus.LAST_BATTLE.equals(symphogearMachine.getModeStatus())) {
+      playerStatus = PlayerStatus.PLAY_LAST_BATTLE;
       roundHistory.add("3R");
     } else {
       playerStatus = PlayerStatus.PLAY_GX_ALLOCATION_AND_ROUND;
