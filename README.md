@@ -6,7 +6,7 @@ cd ./api
 mvn compile quarkus:dev
 ```
 
-- confirm api by curl
+- confirm api by curl (change rate not imple)
 ```
 $ curl -X POST -H 'Content-Type: application/json' -d '
 {
