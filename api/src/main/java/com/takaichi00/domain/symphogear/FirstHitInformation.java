@@ -17,5 +17,4 @@ public class FirstHitInformation {
   public static FirstHitInformation of(int firstHitMoney, int firstHitBall, int firstHitRound) {
     return new FirstHitInformation(firstHitMoney, firstHitBall, firstHitRound);
   }
-
 }

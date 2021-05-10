@@ -82,7 +82,7 @@ public class SymphogearPlayer {
 
   public void playGetRoundAfterFirstHit() {
     havingBall += symphogearMachine.getHitRoundCount();
-    // TODO 10Rと3Rで以降の処理を変える
+
     if (SymphogearModeStatus.LAST_BATTLE.equals(symphogearMachine.getModeStatus())) {
       playerStatus = PlayerStatus.PLAY_LAST_BATTLE;
       roundHistory.add("3R");
@@ -112,9 +112,6 @@ public class SymphogearPlayer {
     }
 
     if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearMachine.getModeStatus())) {
-      // 通常時からの出玉で10Rを取得しているので不要
-      //      havingBall += symphogearMachine.getBallByGx();
-      //      roundHistory.add("10R");
       playerStatus = PlayerStatus.PLAY_GX;
       return;
     }

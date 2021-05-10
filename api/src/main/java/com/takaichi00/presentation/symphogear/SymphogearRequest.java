@@ -18,5 +18,4 @@ public class SymphogearRequest {
 
   @JsonbProperty("ball_reduction_rate")
   private BigDecimal ballReductionRate;
-
 }
