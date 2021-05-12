@@ -6,6 +6,7 @@
   <artifactId>p-simulator</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <properties>
+    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
     <maven.compiler.target>11</maven.compiler.target>
     <quarkus.platform.version>1.10.5.Final</quarkus.platform.version>
@@ -16,7 +17,8 @@
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <quarkus-plugin.version>1.10.5.Final</quarkus-plugin.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
-    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <h2database.version>1.4.200</h2database.version>
+    <dbsetup.version>2.1.0</dbsetup.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -69,6 +71,18 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5-mockito</artifactId>
       <version>${quarkus-plugin.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2database.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.ninja-squad</groupId>
+      <artifactId>DbSetup</artifactId>
+      <version>${dbsetup.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
