@@ -23,6 +23,9 @@ public class ResultEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
-  private String p_name;
+  @Column(name = "p_name")
+  private String pName;
+
+  @Column(name = "first_hit")
+  private Integer firstHit;
 }

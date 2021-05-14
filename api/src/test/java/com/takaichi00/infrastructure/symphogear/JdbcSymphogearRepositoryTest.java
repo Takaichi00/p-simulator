@@ -5,10 +5,11 @@ import com.ninja_squad.dbsetup.destination.DriverManagerDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import com.takaichi00.domain.symphogear.SymphogearRepository;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import static com.ninja_squad.dbsetup.Operations.deleteAllFrom;
 import static com.ninja_squad.dbsetup.Operations.insertInto;
@@ -18,19 +19,31 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 class JdbcSymphogearRepositoryTest {
 
-//  @Inject
-//  SymphogearRepository symphogearRepository;
+  @Inject
+  SymphogearRepository symphogearRepository;
+
+  @Inject
+  EntityManager entityManager;
 
   private static final Operation DELETE_ALL = deleteAllFrom("p_result");
   private static final Operation INSERT_DEFAULT = insertInto("p_result")
-      .columns("id", "p_name")
-      .values("1", "symphogear")
-      .build();
+                                                    .columns("id", "p_name", "first_hit")
+                                                    .values("1", "symphogear", 50)
+                                                    .build();
   Operation operation = sequenceOf(DELETE_ALL, INSERT_DEFAULT);
 
   @Test
-  void ゲームの結果情報を保存することができる() {
+  void ゲームの結果情報の初当たり回転数を保存することができる() {
     DbSetup dbSetup = new DbSetup(new DriverManagerDestination("jdbc:h2:mem:test", "testuser", "testpass"), operation);
     dbSetup.launch();
+
+    symphogearRepository.save(100);
+
+    TypedQuery<ResultEntity> query
+        = entityManager.createQuery("FROM ResultEntity WHERE id = :id", ResultEntity.class).setParameter("id", 2);
+    ResultEntity actual = query.getSingleResult();
+
+    assertEquals(100, actual.getFirstHit());
+
   }
 }
