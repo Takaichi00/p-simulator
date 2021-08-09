@@ -110,7 +110,7 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_10R_11ROTATION.equals(symphogearModeStatus)) {
       return 11;
     }
-    return 7;
+    return 11;
   }
 
   public void gxBattle() {
