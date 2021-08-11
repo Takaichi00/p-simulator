@@ -71,7 +71,7 @@ public class SymphogearMachine {
       return;
     }
     if (rateCalculator.calculate(3, 8)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_11ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_15ROTATION;
       return;
     }
     if (rateCalculator.calculate(3, 5)) {
@@ -91,7 +91,7 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
-    if (SymphogearModeStatus.CHANCE_GX_10R_11ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_10R_15ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
     if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION.equals(symphogearModeStatus)) {
@@ -107,8 +107,8 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearModeStatus)) {
       return 99;
     }
-    if (SymphogearModeStatus.CHANCE_GX_10R_11ROTATION.equals(symphogearModeStatus)) {
-      return 11;
+    if (SymphogearModeStatus.CHANCE_GX_10R_15ROTATION.equals(symphogearModeStatus)) {
+      return 15;
     }
     return 11;
   }
