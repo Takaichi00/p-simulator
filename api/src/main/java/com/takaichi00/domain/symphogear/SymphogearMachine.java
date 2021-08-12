@@ -29,7 +29,7 @@ public class SymphogearMachine {
 
   public int getHitRoundCount() {
     if (rateCalculator.calculate(1, 100)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_99ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_103ROTATION;
       return ROUND_COUNT_10R;
     }
     symphogearModeStatus = SymphogearModeStatus.LAST_BATTLE;
@@ -67,7 +67,7 @@ public class SymphogearMachine {
       return;
     }
     if (rateCalculator.calculate(11, 19)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_99ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_103ROTATION;
       return;
     }
     if (rateCalculator.calculate(3, 8)) {
@@ -88,7 +88,7 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_10R_7ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
-    if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_10R_103ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
     if (SymphogearModeStatus.CHANCE_GX_10R_15ROTATION.equals(symphogearModeStatus)) {
@@ -104,8 +104,8 @@ public class SymphogearMachine {
   }
 
   public int getRotationGx() {
-    if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearModeStatus)) {
-      return 99;
+    if (SymphogearModeStatus.CHANCE_GX_10R_103ROTATION.equals(symphogearModeStatus)) {
+      return 103;
     }
     if (SymphogearModeStatus.CHANCE_GX_10R_15ROTATION.equals(symphogearModeStatus)) {
       return 15;

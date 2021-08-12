@@ -111,7 +111,7 @@ public class SymphogearPlayer {
           "player's status is not PLAY_GX_ALLOCATION_AND_ROUND. status is " + playerStatus);
     }
 
-    if (SymphogearModeStatus.CHANCE_GX_10R_99ROTATION.equals(symphogearMachine.getModeStatus())) {
+    if (SymphogearModeStatus.CHANCE_GX_10R_103ROTATION.equals(symphogearMachine.getModeStatus())) {
       playerStatus = PlayerStatus.PLAY_GX;
       return;
     }

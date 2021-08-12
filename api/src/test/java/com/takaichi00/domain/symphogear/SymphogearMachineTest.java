@@ -66,7 +66,7 @@ class SymphogearMachineTest {
       int actual = testTarget.getHitRoundCount();
       assertEquals(expected, actual);
 
-      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_10R_99ROTATION;
+      SymphogearModeStatus expectedModeStatus = SymphogearModeStatus.CHANCE_GX_10R_103ROTATION;
       SymphogearModeStatus actualModeStatus = testTarget.getModeStatus();
       assertEquals(expectedModeStatus, actualModeStatus);
     }
@@ -190,7 +190,7 @@ class SymphogearMachineTest {
       }
 
       @Test
-      void ラウンド振り分けを実施し_11パーセントの確率で10R_99回転の振り分けになる() {
+      void ラウンド振り分けを実施し_11パーセントの確率で10R_103回転の振り分けになる() {
 
         RateCalculator rateCalculator = Mockito.mock(RateCalculator.class);
         testTarget = new SymphogearMachine(rateCalculator);
@@ -207,7 +207,7 @@ class SymphogearMachineTest {
         when(rateCalculator.calculate(11,19)).thenReturn(true);
 
         int expectedGetBall = 1300;
-        int expectedRotation = 99;
+        int expectedRotation = 103;
 
         testTarget.roundAllocationGx();
         int actualGetBall = testTarget.getBallByGx();
