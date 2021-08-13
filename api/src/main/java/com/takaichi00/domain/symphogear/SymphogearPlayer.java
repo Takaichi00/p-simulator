@@ -118,12 +118,12 @@ public class SymphogearPlayer {
 
     symphogearMachine.roundAllocationGx();
 
-    if (SymphogearModeStatus.CHANCE_GX_4R_7ROTATION.equals(symphogearMachine.getModeStatus())) {
+    if (SymphogearModeStatus.CHANCE_GX_4R_11ROTATION.equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("4R");
-    } else if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION
+    } else if (SymphogearModeStatus.CHANCE_GX_6R_11ROTATION
         .equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("6R");
-    } else if (SymphogearModeStatus.CHANCE_GX_7R_7ROTATION
+    } else if (SymphogearModeStatus.CHANCE_GX_7R_11ROTATION
         .equals(symphogearMachine.getModeStatus())) {
       roundHistory.add("7R");
     } else {

@@ -59,11 +59,11 @@ public class SymphogearMachine {
       throw new RuntimeException("is not status CHANCE_GX_BEFORE_ALLOCATION");
     }
     if (rateCalculator.calculate(45, 100)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_4R_7ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_4R_11ROTATION;
       return;
     }
     if (rateCalculator.calculate(36, 55)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_7ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_10R_11ROTATION;
       return;
     }
     if (rateCalculator.calculate(11, 19)) {
@@ -75,17 +75,17 @@ public class SymphogearMachine {
       return;
     }
     if (rateCalculator.calculate(3, 5)) {
-      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_6R_7ROTATION;
+      symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_6R_11ROTATION;
       return;
     }
-    symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_7R_7ROTATION;
+    symphogearModeStatus = SymphogearModeStatus.CHANCE_GX_7R_11ROTATION;
   }
 
   public int getBallByGx() {
-    if (SymphogearModeStatus.CHANCE_GX_4R_7ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_4R_11ROTATION.equals(symphogearModeStatus)) {
       return 520;
     }
-    if (SymphogearModeStatus.CHANCE_GX_10R_7ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_10R_11ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
     if (SymphogearModeStatus.CHANCE_GX_10R_103ROTATION.equals(symphogearModeStatus)) {
@@ -94,10 +94,10 @@ public class SymphogearMachine {
     if (SymphogearModeStatus.CHANCE_GX_10R_15ROTATION.equals(symphogearModeStatus)) {
       return 1300;
     }
-    if (SymphogearModeStatus.CHANCE_GX_6R_7ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_6R_11ROTATION.equals(symphogearModeStatus)) {
       return 780;
     }
-    if (SymphogearModeStatus.CHANCE_GX_7R_7ROTATION.equals(symphogearModeStatus)) {
+    if (SymphogearModeStatus.CHANCE_GX_7R_11ROTATION.equals(symphogearModeStatus)) {
       return 910;
     }
     throw new RuntimeException("not GX status");
