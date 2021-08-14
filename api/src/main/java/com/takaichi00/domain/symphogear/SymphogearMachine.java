@@ -9,6 +9,7 @@ public class SymphogearMachine {
   private static final int ROUND_COUNT_3R = 390;
   private static final int ROUND_COUNT_10R = 1300;
   private static final int OUT_BALL_COUNT_BY_500YEN = 125;
+  private static final int AWARD_BALL = 3;
 
   private final RateCalculator rateCalculator;
   private SymphogearModeStatus symphogearModeStatus;
@@ -129,5 +130,9 @@ public class SymphogearMachine {
 
   public SymphogearModeStatus getModeStatus() {
     return symphogearModeStatus;
+  }
+
+  public int getAwardBall() {
+    return AWARD_BALL;
   }
 }

@@ -24,6 +24,14 @@ class SymphogearMachineTest {
       int actual = testTarget.outBallBy500Yen();
       assertEquals(expected, actual);
     }
+
+    @Test
+    void _へその賞球として3球取得できる() {
+      testTarget = new SymphogearMachine(new RateCalculator(new CustomRandom(100)));
+      int expected = 3;
+      int actual = testTarget.getAwardBall();
+      assertEquals(expected, actual);
+    }
   }
 
   @DisplayName("通常時")
