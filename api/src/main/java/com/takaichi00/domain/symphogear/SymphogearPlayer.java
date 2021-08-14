@@ -57,9 +57,10 @@ public class SymphogearPlayer {
     } while (!rateCalculator.calculate(roundPer1000yen,
                            symphogearMachine.outBallBy500Yen() * 2));
 
+    havingBall += symphogearMachine.getAwardBall();
+
     return consumeBallUntilInNavel;
   }
-
 
   public FirstHitInformation playSymphogearUntilFirstHit() {
 

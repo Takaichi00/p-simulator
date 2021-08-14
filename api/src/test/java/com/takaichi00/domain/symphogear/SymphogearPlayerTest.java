@@ -70,19 +70,56 @@ class SymphogearPlayerTest {
       assertEquals(expected, actual);
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 115;
+      int expectedHavingBall = 118;
       assertEquals(expectedHavingBall, actualHavingBall);
-
     }
 
     @Test
-    void Playerは0玉所持している場合_大当りを取得するまで玉をへそに入れ続け_大当りを獲得したときの消費玉と消費金額と回転数を取得できる() {
+    void Playerは0玉を所持している場合_500円を消費して125玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる_2回転の場合() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
+
+      when(spyRateCalculator.calculate(20, 250))
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9))
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9));
+
+      int expected = 20;
+      int actual1 = testTarget.putBallUntilInNavel();
+      int actual2 = testTarget.putBallUntilInNavel();
+      assertEquals(expected, actual1 + actual2);
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 111;
+      assertEquals(expectedHavingBall, actualHavingBall);
+    }
+
+    @Test
+    void Playerは0玉を所持している場合_500円を消費して125玉を取得し_1玉当たりのへそに入れる確率で1回へそに入れるまで抽選し_消費した玉を取得できる_3回転の場合() {
+      SymphogearPlayer testTarget = SymphogearPlayer.of(new SymphogearMachine(), ROUND_PER_1000YEN, spyRateCalculator);
+
+      when(spyRateCalculator.calculate(20, 250))
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9))
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9))
+          .thenReturn(false, createFalseArrayUntilSpecifiedTrueNumber(9));
+
+      int expected = 30;
+      int actual1 = testTarget.putBallUntilInNavel();
+      int actual2 = testTarget.putBallUntilInNavel();
+      int actual3 = testTarget.putBallUntilInNavel();
+      assertEquals(expected, actual1 + actual2 + actual3);
+
+      int actualHavingBall = testTarget.getHavingBall();
+      int expectedHavingBall = 104;
+      assertEquals(expectedHavingBall, actualHavingBall);
+    }
+
+    @Test
+    void Playerは0玉所持している場合_100回転で大当たりする場合_大当りを取得するまで玉をへそに入れ続け_大当りを獲得したときの消費玉と消費金額と回転数を取得できる() {
       // 100回転で大当りを獲得する場合
-      // 1回転10玉消費 → 100回転 1000玉投資 → 1000/125=8 → 8*500=4000円投資
+      // 1回転10玉消費 → 100回転 1000玉投資 + 300賞球回収 → (1000-300)/125=5.6 → 6*500=3000円投資
 
       FirstHitInformation expected = FirstHitInformation.builder()
                                                         .firstHitBall(1000)
-                                                        .firstHitMoney(4000)
+                                                        .firstHitMoney(3000)
                                                         .firstHitRound(100)
                                                         .build();
       SymphogearPlayer testTarget = setupAndCretePlayerInstance(false, false);
@@ -101,7 +138,7 @@ class SymphogearPlayerTest {
       testTarget.playSymphogearUntilFirstHit();
       testTarget.playGetRoundAfterFirstHit();
 
-      int expected = 390;
+      int expected = 390 + 50; // 賞球を加味すると700玉で100回転 → 125 * 6 = 750 なので、50球余る
       int actual = testTarget.getHavingBall();
       assertEquals(expected, actual);
     }
@@ -115,7 +152,7 @@ class SymphogearPlayerTest {
 
       testTarget.playLastBattle();
 
-      int expectedHavingBall = 390;
+      int expectedHavingBall = 440; // 390 + あまり玉50
       PlayerStatus expectedPlayerStatus = PlayerStatus.FINISH;
 
       int actualHavingBall = testTarget.getHavingBall();
@@ -136,7 +173,7 @@ class SymphogearPlayerTest {
       testTarget.playRoundAllocationAndRound();
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 910;
+      int expectedHavingBall = 960;
       assertEquals(expectedHavingBall, actualHavingBall);
     }
 
@@ -156,7 +193,7 @@ class SymphogearPlayerTest {
       testTarget.playGx();
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 910;
+      int expectedHavingBall = 960;
       assertEquals(expectedHavingBall, actualHavingBall);
 
       PlayerStatus expectedStatus = PlayerStatus.FINISH;
@@ -189,7 +226,7 @@ class SymphogearPlayerTest {
       testTarget.playGx();
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 1430; // 390 (3R) + 520 (4R) + 520 (4R)
+      int expectedHavingBall = 1480; // 390 (3R) + 520 (4R) + 520 (4R) + あまり玉50
       assertEquals(expectedHavingBall, actualHavingBall);
 
       PlayerStatus expectedStatus = PlayerStatus.FINISH;
@@ -224,7 +261,7 @@ class SymphogearPlayerTest {
       testTarget.playGx();
 
       int actualHavingBall = testTarget.getHavingBall();
-      int expectedHavingBall = 1820; // 1300 (10R) + 520 (4R)
+      int expectedHavingBall = 1870; // 1300 (10R) + 520 (4R) + あまり玉50
       assertEquals(expectedHavingBall, actualHavingBall);
 
       PlayerStatus expectedStatus = PlayerStatus.FINISH;
