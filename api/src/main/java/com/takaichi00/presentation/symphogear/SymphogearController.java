@@ -7,9 +7,12 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/v1/symphogear")
 public class SymphogearController {
@@ -42,5 +45,46 @@ public class SymphogearController {
                                 .roundAllocations(hitResultModel.getRoundAllocations())
                                 .build();
     return Response.ok(response).build();
+  }
+
+  @POST
+  @Path("/balance/{count}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response balance(SymphogearRequest symphogearRequest, @PathParam("count") int count) {
+
+    if (count <= 0) {
+      throw new RuntimeException();
+    }
+
+    HitInputModel hitInputModel
+        = HitInputModel.builder()
+        .rotationRatePer1000yen(symphogearRequest.getRotationRatePer1000yen())
+        .changeRate(symphogearRequest.getChangeRate())
+        .ballReductionRate(symphogearRequest.getBallReductionRate())
+        .build();
+
+    List<HitResultModel> hitResultModelList = new ArrayList<>();
+
+    for (int i=0; i < count; ++i) {
+      hitResultModelList.add(symphogearService.getHitInformation(hitInputModel));
+    }
+
+    List<SymphogearResultResponse> symphogearResultResponseList = new ArrayList<>();
+
+    for (HitResultModel hitResultModel : hitResultModelList) {
+      symphogearResultResponseList.add(
+          SymphogearResultResponse.builder()
+                                  .investmentYen(hitResultModel.getInvestmentYen())
+                                  .collectionBall(hitResultModel.getCollectionBall())
+                                  .collectionYen(hitResultModel.getCollectionYen())
+                                  .balanceResultYen(hitResultModel.getBalanceResultYen())
+                                  .firstHit(hitResultModel.getFirstHit())
+                                  .continuousHitCount(hitResultModel.getContinuousHitCount())
+                                  .roundAllocations(hitResultModel.getRoundAllocations())
+                                  .build()
+      );
+    }
+    return Response.ok(symphogearResultResponseList).build();
   }
 }
