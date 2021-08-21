@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/v1/symphogear")
 public class SymphogearController {
@@ -19,10 +18,10 @@ public class SymphogearController {
   SymphogearService symphogearService;
 
   @POST
-  @Path("/balance/{count}")
+  @Path("/balance")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response balance(SymphogearRequest symphogearRequest, @PathParam Integer count) {
+  public Response balance(SymphogearRequest symphogearRequest) {
     HitInputModel hitInputModel
           = HitInputModel.builder()
                     .rotationRatePer1000yen(symphogearRequest.getRotationRatePer1000yen())

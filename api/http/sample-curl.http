@@ -1,9 +1,9 @@
 ###
-POST http://localhost:8080/v1/symphogear/balance/1
+POST http://localhost:8080/v1/symphogear/balance
 Content-Type: application/json
 
 {
-  "rotation_rate_per_1000yen": 20,
+  "rotation_rate_per_1000yen": 10,
   "change_rate": 4,
   "ball_reduction_rate": 0
 }

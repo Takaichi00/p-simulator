@@ -1,6 +1,7 @@
 package integrationtest;
 
 import io.restassured.RestAssured;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class SymphogearIT {
     given().when()
             .contentType(MediaType.APPLICATION_JSON)
             .body(jsonObj.toString())
-            .post("v1/symphogear/balance/1")
+            .post("v1/symphogear/balance")
            .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)

@@ -53,7 +53,7 @@ class SymphogearControllerTest {
     given().when()
             .contentType(MediaType.APPLICATION_JSON)
             .body(jsonObj.toString())
-            .post("v1/symphogear/balance/1")
+            .post("v1/symphogear/balance")
            .then()
             .statusCode(200)
             .contentType(MediaType.APPLICATION_JSON)
