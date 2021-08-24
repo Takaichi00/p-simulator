@@ -60,4 +60,9 @@ public class SymphogearServiceImpl implements SymphogearService {
                          .roundAllocations(symphogearPlayer.getRoundHistory())
                          .build();
   }
+
+  @Override
+  public HitAvgResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount) {
+    return null;
+  }
 }
