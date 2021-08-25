@@ -4,5 +4,5 @@ public interface SymphogearService {
 
   HitResultModel getHitInformation(HitInputModel hitInputModel);
 
-  HitAvgResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount);
+  HitSummaryResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount);
 }

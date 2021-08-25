@@ -62,7 +62,7 @@ public class SymphogearServiceImpl implements SymphogearService {
   }
 
   @Override
-  public HitAvgResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount) {
+  public HitSummaryResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount) {
     return null;
   }
 }
