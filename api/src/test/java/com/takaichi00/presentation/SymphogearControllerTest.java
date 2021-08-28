@@ -79,16 +79,21 @@ class SymphogearControllerTest {
         .put("change_rate",3.6)
         .put("ball_reduction_rate",0.05);
 
+    HitResultModel hitResultModel = HitResultModel.builder()
+                                                  .investmentYen(5000)
+                                                  .collectionBall(2000)
+                                                  .collectionYen(7200)
+                                                  .balanceResultYen(2200)
+                                                  .firstHit(100)
+                                                  .continuousHitCount(3)
+                                                  .build();
+
     HitSummaryResultModel hitSummaryResultModel =
         HitSummaryResultModel.builder()
-                             .investmentYenAvg(BigDecimal.valueOf(5000))
-                             .collectionBallAvg(BigDecimal.valueOf(2000))
-                             .collectionYenAvg(BigDecimal.valueOf(7200))
-                             .balanceResultYenAvg(BigDecimal.valueOf(2200))
-                             .firstHitAvg(BigDecimal.valueOf(100))
-                             .continuousHitCountAvg(BigDecimal.valueOf(3))
+                             .avgHitResultModel(hitResultModel)
+                             .maxHitResultModel(hitResultModel)
+                             .minHitResultModel(hitResultModel)
                              .build();
-
 
     HitInputModel hitInputModel = HitInputModel.builder()
                                                .rotationRatePer1000yen(20)

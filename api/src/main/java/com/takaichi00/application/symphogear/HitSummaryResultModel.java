@@ -9,10 +9,7 @@ import lombok.Getter;
 @Builder
 @EqualsAndHashCode
 public class HitSummaryResultModel {
-  private final BigDecimal investmentYenAvg;
-  private final BigDecimal collectionBallAvg;
-  private final BigDecimal collectionYenAvg;
-  private final BigDecimal balanceResultYenAvg;
-  private final BigDecimal firstHitAvg;
-  private final BigDecimal continuousHitCountAvg;
+  private final HitResultModel avgHitResultModel;
+  private final HitResultModel maxHitResultModel;
+  private final HitResultModel minHitResultModel;
 }
