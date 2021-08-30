@@ -63,6 +63,9 @@ public class SymphogearServiceImpl implements SymphogearService {
 
   @Override
   public HitSummaryResultModel getHitAvgInformation(HitInputModel hitInputModel, int hitLoopCount) {
+    if (hitLoopCount < 1) {
+      throw new RuntimeException();
+    }
     return null;
   }
 }
