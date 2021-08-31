@@ -65,6 +65,7 @@ class SymphogearServiceImplTest {
           PlayerStatus.FINISH);
 
       when(spySymphogearPlayer.getRoundHistory()).thenReturn(Arrays.asList("4R", "10R", "10R"));
+      when(spySymphogearPlayer.getContinuousCount()).thenReturn(3);
 
       HitInputModel hitInputModel = HitInputModel.builder()
           .rotationRatePer1000yen(20)

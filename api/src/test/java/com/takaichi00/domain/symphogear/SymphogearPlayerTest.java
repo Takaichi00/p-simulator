@@ -232,6 +232,10 @@ class SymphogearPlayerTest {
       PlayerStatus expectedStatus = PlayerStatus.FINISH;
       PlayerStatus actualStatus = testTarget.getStatus();
       assertEquals(expectedStatus, actualStatus);
+
+      int expectedContinuousCount = 3;
+      int actualContinuousCount = testTarget.getContinuousCount();
+      assertEquals(expectedContinuousCount, actualContinuousCount);
     }
 
     @Test

@@ -30,9 +30,7 @@ public class SymphogearServiceImpl implements SymphogearService {
       symphogearPlayer.playLastBattle();
     }
 
-    int continuousCount = 1;
     while (!PlayerStatus.FINISH.equals(symphogearPlayer.getStatus())) {
-      ++continuousCount;
       symphogearPlayer.playRoundAllocationAndRound();
       symphogearPlayer.playGx();
     }
@@ -56,7 +54,7 @@ public class SymphogearServiceImpl implements SymphogearService {
                          .collectionYen(resultYen)
                          .balanceResultYen(resultYen - firstHitInformation.getFirstHitMoney())
                          .firstHit(firstHitInformation.getFirstHitRound())
-                         .continuousHitCount(continuousCount)
+                         .continuousHitCount(symphogearPlayer.getContinuousCount())
                          .roundAllocations(symphogearPlayer.getRoundHistory())
                          .build();
   }

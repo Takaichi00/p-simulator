@@ -14,6 +14,7 @@ public class SymphogearPlayer {
 
   private int havingBall = 0;
   private int useMoney = 0;
+  private int continuousCount = 1;
   private PlayerStatus playerStatus = PlayerStatus.BEFORE_PLAY;
   private final List<String> roundHistory = new ArrayList<>();
 
@@ -139,6 +140,7 @@ public class SymphogearPlayer {
     if (!PlayerStatus.PLAY_GX.equals(playerStatus)) {
       throw new RuntimeException("player's status is not PLAY_GX. status is " + playerStatus);
     }
+    ++continuousCount;
     symphogearMachine.gxBattle();
     if (SymphogearModeStatus.NORMAL.equals(symphogearMachine.getModeStatus())) {
       playerStatus = PlayerStatus.FINISH;
@@ -150,6 +152,14 @@ public class SymphogearPlayer {
       return;
     }
     throw new RuntimeException("unexpected error has occurred");
+  }
+
+  public void playRoundAllocationAndRoundAndGx() {
+    while (!PlayerStatus.FINISH.equals(this.getStatus())) {
+      ++continuousCount;
+      this.playRoundAllocationAndRound();
+      this.playGx();
+    }
   }
 
   public int getHavingBall() {
@@ -166,5 +176,9 @@ public class SymphogearPlayer {
 
   public List<String> getRoundHistory() {
     return roundHistory;
+  }
+
+  public int getContinuousCount() {
+    return continuousCount;
   }
 }
