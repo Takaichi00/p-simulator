@@ -1,6 +1,5 @@
 package com.takaichi00.application.symphogear;
 
-import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

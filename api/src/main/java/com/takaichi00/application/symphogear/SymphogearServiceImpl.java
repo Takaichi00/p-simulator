@@ -10,6 +10,8 @@ import com.takaichi00.domain.symphogear.PlayerStatus;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApplicationScoped
 public class SymphogearServiceImpl implements SymphogearService {
@@ -35,13 +37,13 @@ public class SymphogearServiceImpl implements SymphogearService {
       symphogearPlayer.playGx();
     }
 
-    int resultBall = symphogearPlayer.getHavingBall();
 
     PrizeRateInformation prizeRateInformation
         = new PrizeRateInformation(1000, 2500, 8000);
     PachinkoStore pachinkoStore
         = PachinkoStore.of(prizeRateInformation, hitInputModel.getChangeRate().doubleValue());
 
+    int resultBall = symphogearPlayer.getHavingBall();
     Prize resultPrize = pachinkoStore.convertBallToPrize(resultBall);
 
     ConversionCenter conversionCenter = new ConversionCenter(prizeRateInformation);
@@ -64,6 +66,29 @@ public class SymphogearServiceImpl implements SymphogearService {
     if (hitLoopCount < 1) {
       throw new RuntimeException();
     }
-    return null;
+
+    Integer investmentYenSum = 0;
+
+    for (int i = 0; i < hitLoopCount; ++i) {
+      HitResultModel hitResultModel = getHitInformation(hitInputModel);
+      investmentYenSum += hitResultModel.getInvestmentYen();
+    }
+
+    HitResultModel avgResult = HitResultModel.builder()
+                                             .investmentYen(investmentYenSum / hitLoopCount)
+                                             .collectionBall(null)
+                                             .collectionYen(null)
+                                             .balanceResultYen(null)
+                                             .firstHit(null)
+                                             .continuousHitCount(null)
+                                             .roundAllocations(null)
+                                             .build();
+
+    return HitSummaryResultModel.builder()
+                                .avgHitResultModel(avgResult)
+                                .maxHitResultModel(null)
+                                .minHitResultModel(null)
+                                .build();
+
   }
 }
