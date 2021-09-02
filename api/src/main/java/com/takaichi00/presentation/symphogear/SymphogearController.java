@@ -108,19 +108,40 @@ public class SymphogearController {
 
     HitSummaryResultModel result = symphogearService.getHitAvgInformation(hitInputModel, count);
 
-    SymphogearResultResponse response = SymphogearResultResponse.builder()
-        .investmentYen(5000)
-        .collectionBall(2000)
-        .collectionYen(7200)
-        .balanceResultYen(2200)
-        .firstHit(100)
-        .continuousHitCount(3)
-        .build();
+    SymphogearResultResponse avgResponse =
+        SymphogearResultResponse.builder()
+                                .investmentYen(result.getAvgHitResultModel().getInvestmentYen())
+                                .collectionBall(2000)
+                                .collectionYen(7200)
+                                .balanceResultYen(2200)
+                                .firstHit(100)
+                                .continuousHitCount(3)
+                                .build();
+
+    SymphogearResultResponse maxResponse =
+        SymphogearResultResponse.builder()
+                                .investmentYen(result.getMaxHitResultModel().getInvestmentYen())
+                                .collectionBall(2000)
+                                .collectionYen(7200)
+                                .balanceResultYen(2200)
+                                .firstHit(100)
+                                .continuousHitCount(3)
+                                .build();
+
+    SymphogearResultResponse minResponse =
+        SymphogearResultResponse.builder()
+                                .investmentYen(result.getMinHitResultModel().getInvestmentYen())
+                                .collectionBall(2000)
+                                .collectionYen(7200)
+                                .balanceResultYen(2200)
+                                .firstHit(100)
+                                .continuousHitCount(3)
+                                .build();
 
     SymphogearSummaryResultResponse summaryResponse = SymphogearSummaryResultResponse.builder()
-        .averageResponse(response)
-        .maxResponse(response)
-        .minResponse(response)
+        .averageResponse(avgResponse)
+        .maxResponse(maxResponse)
+        .minResponse(minResponse)
         .build();
 
 

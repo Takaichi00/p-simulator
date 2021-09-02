@@ -3,7 +3,7 @@ POST http://localhost:8080/v1/symphogear/balance
 Content-Type: application/json
 
 {
-  "rotation_rate_per_1000yen": 10,
+  "rotation_rate_per_1000yen": 15,
   "change_rate": 4,
   "ball_reduction_rate": 0
 }
@@ -13,7 +13,17 @@ POST http://localhost:8080/v1/symphogear/balance/100
 Content-Type: application/json
 
 {
-  "rotation_rate_per_1000yen": 10,
+  "rotation_rate_per_1000yen": 15,
+  "change_rate": 4,
+  "ball_reduction_rate": 0
+}
+
+###
+POST http://localhost:8080/v1/symphogear/balance/summary/10000
+Content-Type: application/json
+
+{
+  "rotation_rate_per_1000yen": 15,
   "change_rate": 4,
   "ball_reduction_rate": 0
 }

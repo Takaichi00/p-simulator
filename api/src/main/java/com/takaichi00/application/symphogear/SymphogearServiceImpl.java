@@ -69,12 +69,16 @@ public class SymphogearServiceImpl implements SymphogearService {
 
     Integer investmentYenSum = 0;
     Integer investmentYenMax = 0;
+    Integer investmentYenMin = Integer.MAX_VALUE;
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
       investmentYenSum += hitResultModel.getInvestmentYen();
       if (investmentYenMax < hitResultModel.getInvestmentYen()) {
         investmentYenMax = hitResultModel.getInvestmentYen();
+      }
+      if (investmentYenMin > hitResultModel.getInvestmentYen()) {
+        investmentYenMin = hitResultModel.getInvestmentYen();
       }
     }
 
@@ -98,10 +102,20 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .roundAllocations(null)
                                              .build();
 
+    HitResultModel minResult = HitResultModel.builder()
+                                             .investmentYen(investmentYenMin)
+                                             .collectionBall(null)
+                                             .collectionYen(null)
+                                             .balanceResultYen(null)
+                                             .firstHit(null)
+                                             .continuousHitCount(null)
+                                             .roundAllocations(null)
+                                             .build();
+
     return HitSummaryResultModel.builder()
                                 .avgHitResultModel(avgResult)
                                 .maxHitResultModel(maxResult)
-                                .minHitResultModel(null)
+                                .minHitResultModel(minResult)
                                 .build();
 
   }
