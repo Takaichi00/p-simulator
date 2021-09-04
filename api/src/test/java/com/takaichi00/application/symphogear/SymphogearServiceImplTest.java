@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 class SymphogearServiceImplTest {
 
@@ -118,5 +119,8 @@ class SymphogearServiceImplTest {
 
     Optional<Integer> resultMin = investmentYenList.stream().min(Comparator.naturalOrder());
     assertEquals(1, resultMin.get().intValue());
+
+    double resultAvg = investmentYenList.stream().mapToDouble(d -> d).average().orElse(0);
+    assertEquals(2.75, resultAvg);
   }
 }
