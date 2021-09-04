@@ -20,7 +20,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 class SymphogearServiceImplTest {
 
@@ -99,5 +103,20 @@ class SymphogearServiceImplTest {
     void _3回の値取得をしようとすると例外が発生する() {
 
     }
+  }
+
+  @Test
+  void Streamのmaxとminの学習用テスト() {
+    List<Integer> investmentYenList = new ArrayList<>();
+    investmentYenList.add(5);
+    investmentYenList.add(3);
+    investmentYenList.add(1);
+    investmentYenList.add(2);
+
+    Optional<Integer> resultMax = investmentYenList.stream().max(Comparator.naturalOrder());
+    assertEquals(5, resultMax.get().intValue());
+
+    Optional<Integer> resultMin = investmentYenList.stream().min(Comparator.naturalOrder());
+    assertEquals(1, resultMin.get().intValue());
   }
 }

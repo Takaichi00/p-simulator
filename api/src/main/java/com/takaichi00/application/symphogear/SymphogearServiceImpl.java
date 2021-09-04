@@ -70,6 +70,7 @@ public class SymphogearServiceImpl implements SymphogearService {
     Integer investmentYenSum = 0;
     Integer investmentYenMax = 0;
     Integer investmentYenMin = Integer.MAX_VALUE;
+    List<Integer> investmentYenList = new ArrayList<>();
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
@@ -80,6 +81,7 @@ public class SymphogearServiceImpl implements SymphogearService {
       if (investmentYenMin > hitResultModel.getInvestmentYen()) {
         investmentYenMin = hitResultModel.getInvestmentYen();
       }
+      investmentYenList.add(hitResultModel.getInvestmentYen());
     }
 
     HitResultModel avgResult = HitResultModel.builder()
