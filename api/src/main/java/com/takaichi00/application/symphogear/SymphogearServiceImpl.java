@@ -11,6 +11,7 @@ import com.takaichi00.domain.symphogear.SymphogearPlayer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @ApplicationScoped
@@ -67,25 +68,16 @@ public class SymphogearServiceImpl implements SymphogearService {
       throw new RuntimeException();
     }
 
-    Integer investmentYenSum = 0;
-    Integer investmentYenMax = 0;
-    Integer investmentYenMin = Integer.MAX_VALUE;
     List<Integer> investmentYenList = new ArrayList<>();
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
-      investmentYenSum += hitResultModel.getInvestmentYen();
-      if (investmentYenMax < hitResultModel.getInvestmentYen()) {
-        investmentYenMax = hitResultModel.getInvestmentYen();
-      }
-      if (investmentYenMin > hitResultModel.getInvestmentYen()) {
-        investmentYenMin = hitResultModel.getInvestmentYen();
-      }
       investmentYenList.add(hitResultModel.getInvestmentYen());
     }
 
     HitResultModel avgResult = HitResultModel.builder()
-                                             .investmentYen(investmentYenSum / hitLoopCount)
+                                             .investmentYen((int)investmentYenList.stream()
+                                                 .mapToDouble(d -> d).average().orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
@@ -95,7 +87,8 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .build();
 
     HitResultModel maxResult = HitResultModel.builder()
-                                             .investmentYen(investmentYenMax)
+                                             .investmentYen(investmentYenList.stream()
+                                                 .max(Comparator.naturalOrder()).get())
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
@@ -105,7 +98,8 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .build();
 
     HitResultModel minResult = HitResultModel.builder()
-                                             .investmentYen(investmentYenMin)
+                                             .investmentYen(investmentYenList
+                                                 .stream().min(Comparator.naturalOrder()).get())
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
