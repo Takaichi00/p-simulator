@@ -76,8 +76,11 @@ public class SymphogearServiceImpl implements SymphogearService {
     }
 
     HitResultModel avgResult = HitResultModel.builder()
-                                             .investmentYen((int)investmentYenList.stream()
-                                                 .mapToDouble(d -> d).average().orElse(0))
+                                             .investmentYen((int)investmentYenList
+                                                 .stream()
+                                                 .mapToDouble(d -> d)
+                                                 .average()
+                                                 .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
@@ -86,9 +89,12 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .roundAllocations(null)
                                              .build();
 
+
+
     HitResultModel maxResult = HitResultModel.builder()
                                              .investmentYen(investmentYenList.stream()
-                                                 .max(Comparator.naturalOrder()).get())
+                                                 .max(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
@@ -99,7 +105,9 @@ public class SymphogearServiceImpl implements SymphogearService {
 
     HitResultModel minResult = HitResultModel.builder()
                                              .investmentYen(investmentYenList
-                                                 .stream().min(Comparator.naturalOrder()).get())
+                                                 .stream()
+                                                 .min(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
