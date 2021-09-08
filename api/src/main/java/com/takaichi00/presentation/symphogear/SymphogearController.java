@@ -111,31 +111,31 @@ public class SymphogearController {
     SymphogearResultResponse avgResponse =
         SymphogearResultResponse.builder()
                                 .investmentYen(result.getAvgHitResultModel().getInvestmentYen())
-                                .collectionBall(2000)
-                                .collectionYen(7200)
-                                .balanceResultYen(2200)
-                                .firstHit(100)
-                                .continuousHitCount(3)
+                                .collectionBall(result.getAvgHitResultModel().getCollectionBall())
+                                .collectionYen(result.getAvgHitResultModel().getCollectionYen())
+                                .balanceResultYen(result.getAvgHitResultModel().getBalanceResultYen())
+                                .firstHit(result.getAvgHitResultModel().getFirstHit())
+                                .continuousHitCount(result.getAvgHitResultModel().getContinuousHitCount())
                                 .build();
 
     SymphogearResultResponse maxResponse =
         SymphogearResultResponse.builder()
                                 .investmentYen(result.getMaxHitResultModel().getInvestmentYen())
-                                .collectionBall(2000)
-                                .collectionYen(7200)
-                                .balanceResultYen(2200)
-                                .firstHit(100)
-                                .continuousHitCount(3)
+                                .collectionBall(result.getMaxHitResultModel().getCollectionBall())
+                                .collectionYen(result.getMaxHitResultModel().getCollectionYen())
+                                .balanceResultYen(result.getMaxHitResultModel().getBalanceResultYen())
+                                .firstHit(result.getMaxHitResultModel().getFirstHit())
+                                .continuousHitCount(result.getMaxHitResultModel().getContinuousHitCount())
                                 .build();
 
     SymphogearResultResponse minResponse =
         SymphogearResultResponse.builder()
                                 .investmentYen(result.getMinHitResultModel().getInvestmentYen())
-                                .collectionBall(2000)
-                                .collectionYen(7200)
-                                .balanceResultYen(2200)
-                                .firstHit(100)
-                                .continuousHitCount(3)
+                                .collectionBall(result.getMinHitResultModel().getCollectionBall())
+                                .collectionYen(result.getMinHitResultModel().getCollectionYen())
+                                .balanceResultYen(result.getMinHitResultModel().getBalanceResultYen())
+                                .firstHit(result.getMinHitResultModel().getFirstHit())
+                                .continuousHitCount(result.getMinHitResultModel().getContinuousHitCount())
                                 .build();
 
     SymphogearSummaryResultResponse summaryResponse = SymphogearSummaryResultResponse.builder()
