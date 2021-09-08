@@ -69,10 +69,12 @@ public class SymphogearServiceImpl implements SymphogearService {
     }
 
     List<Integer> investmentYenList = new ArrayList<>();
+    List<Integer> firstHitList = new ArrayList<>();
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
       investmentYenList.add(hitResultModel.getInvestmentYen());
+      firstHitList.add(hitResultModel.getFirstHit());
     }
 
     HitResultModel avgResult = HitResultModel.builder()
@@ -84,7 +86,11 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
-                                             .firstHit(null)
+                                             .firstHit((int)firstHitList
+                                                .stream()
+                                                .mapToDouble(d -> d)
+                                                .average()
+                                                .orElse(0))
                                              .continuousHitCount(null)
                                              .roundAllocations(null)
                                              .build();
@@ -98,7 +104,9 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
-                                             .firstHit(null)
+                                             .firstHit(firstHitList.stream()
+                                                 .max(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .continuousHitCount(null)
                                              .roundAllocations(null)
                                              .build();
@@ -111,7 +119,10 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .collectionBall(null)
                                              .collectionYen(null)
                                              .balanceResultYen(null)
-                                             .firstHit(null)
+                                             .firstHit(firstHitList
+                                                 .stream()
+                                                 .min(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .continuousHitCount(null)
                                              .roundAllocations(null)
                                              .build();
