@@ -70,13 +70,15 @@ public class SymphogearServiceImpl implements SymphogearService {
 
     List<Integer> investmentYenList = new ArrayList<>();
     List<Integer> firstHitList = new ArrayList<>();
-    List<Integer> balanceResultYen = new ArrayList<>();
+    List<Integer> balanceResultYenList = new ArrayList<>();
+    List<Integer> continuousHitCountList = new ArrayList<>();
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
       investmentYenList.add(hitResultModel.getInvestmentYen());
       firstHitList.add(hitResultModel.getFirstHit());
-      balanceResultYen.add(hitResultModel.getBalanceResultYen());
+      balanceResultYenList.add(hitResultModel.getBalanceResultYen());
+      continuousHitCountList.add(hitResultModel.getContinuousHitCount());
     }
 
     HitResultModel avgResult = HitResultModel.builder()
@@ -86,7 +88,7 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                  .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
-                                             .balanceResultYen((int)balanceResultYen.stream()
+                                             .balanceResultYen((int)balanceResultYenList.stream()
                                                  .mapToDouble(d -> d)
                                                  .average()
                                                  .orElse(0))
@@ -94,11 +96,12 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                 .mapToDouble(d -> d)
                                                 .average()
                                                 .orElse(0))
-                                             .continuousHitCount(null)
+                                             .continuousHitCount((int)continuousHitCountList.stream()
+                                                 .mapToDouble(d -> d)
+                                                 .average()
+                                                 .orElse(0))
                                              .roundAllocations(null)
                                              .build();
-
-
 
     HitResultModel maxResult = HitResultModel.builder()
                                              .investmentYen(investmentYenList.stream()
@@ -106,13 +109,15 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                  .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
-                                             .balanceResultYen(balanceResultYen.stream()
+                                             .balanceResultYen(balanceResultYenList.stream()
                                                  .max(Comparator.naturalOrder())
                                                  .orElse(0))
                                              .firstHit(firstHitList.stream()
                                                  .max(Comparator.naturalOrder())
                                                  .orElse(0))
-                                             .continuousHitCount(null)
+                                             .continuousHitCount(continuousHitCountList.stream()
+                                                 .max(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .roundAllocations(null)
                                              .build();
 
@@ -122,14 +127,16 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                  .orElse(0))
                                              .collectionBall(null)
                                              .collectionYen(null)
-                                             .balanceResultYen(balanceResultYen.stream()
+                                             .balanceResultYen(balanceResultYenList.stream()
                                                  .min(Comparator.naturalOrder())
                                                  .orElse(0))
                                              .firstHit(firstHitList
                                                  .stream()
                                                  .min(Comparator.naturalOrder())
                                                  .orElse(0))
-                                             .continuousHitCount(null)
+                                             .continuousHitCount(continuousHitCountList.stream()
+                                                 .min(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .roundAllocations(null)
                                              .build();
 
