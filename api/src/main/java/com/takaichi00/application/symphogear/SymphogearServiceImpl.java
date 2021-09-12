@@ -72,6 +72,7 @@ public class SymphogearServiceImpl implements SymphogearService {
     List<Integer> firstHitList = new ArrayList<>();
     List<Integer> balanceResultYenList = new ArrayList<>();
     List<Integer> continuousHitCountList = new ArrayList<>();
+    List<Integer> collectionBallList = new ArrayList<>();
 
     for (int i = 0; i < hitLoopCount; ++i) {
       HitResultModel hitResultModel = getHitInformation(hitInputModel);
@@ -79,6 +80,7 @@ public class SymphogearServiceImpl implements SymphogearService {
       firstHitList.add(hitResultModel.getFirstHit());
       balanceResultYenList.add(hitResultModel.getBalanceResultYen());
       continuousHitCountList.add(hitResultModel.getContinuousHitCount());
+      collectionBallList.add(hitResultModel.getCollectionBall());
     }
 
     HitResultModel avgResult = HitResultModel.builder()
@@ -86,7 +88,10 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                  .mapToDouble(d -> d)
                                                  .average()
                                                  .orElse(0))
-                                             .collectionBall(null)
+                                             .collectionBall((int)collectionBallList.stream()
+                                                 .mapToDouble(d -> d)
+                                                 .average()
+                                                 .orElse(0))
                                              .collectionYen(null)
                                              .balanceResultYen((int)balanceResultYenList.stream()
                                                  .mapToDouble(d -> d)
@@ -107,7 +112,9 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .investmentYen(investmentYenList.stream()
                                                  .max(Comparator.naturalOrder())
                                                  .orElse(0))
-                                             .collectionBall(null)
+                                             .collectionBall(collectionBallList.stream()
+                                                 .max(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .collectionYen(null)
                                              .balanceResultYen(balanceResultYenList.stream()
                                                  .max(Comparator.naturalOrder())
@@ -125,7 +132,9 @@ public class SymphogearServiceImpl implements SymphogearService {
                                              .investmentYen(investmentYenList.stream()
                                                  .min(Comparator.naturalOrder())
                                                  .orElse(0))
-                                             .collectionBall(null)
+                                             .collectionBall(collectionBallList.stream()
+                                                 .min(Comparator.naturalOrder())
+                                                 .orElse(0))
                                              .collectionYen(null)
                                              .balanceResultYen(balanceResultYenList.stream()
                                                  .min(Comparator.naturalOrder())
