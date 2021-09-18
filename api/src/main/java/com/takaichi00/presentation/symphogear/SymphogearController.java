@@ -93,7 +93,8 @@ public class SymphogearController {
   @Path("/balance/summary/{count}")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response balanceSummary(SymphogearRequest symphogearRequest, @PathParam("count") int count) {
+  public Response balanceSummary(SymphogearRequest symphogearRequest,
+                                 @PathParam("count") int count) {
 
     if (count <= 0) {
       throw new RuntimeException();
@@ -113,9 +114,11 @@ public class SymphogearController {
                                 .investmentYen(result.getAvgHitResultModel().getInvestmentYen())
                                 .collectionBall(result.getAvgHitResultModel().getCollectionBall())
                                 .collectionYen(result.getAvgHitResultModel().getCollectionYen())
-                                .balanceResultYen(result.getAvgHitResultModel().getBalanceResultYen())
+                                .balanceResultYen(result.getAvgHitResultModel()
+                                                        .getBalanceResultYen())
                                 .firstHit(result.getAvgHitResultModel().getFirstHit())
-                                .continuousHitCount(result.getAvgHitResultModel().getContinuousHitCount())
+                                .continuousHitCount(result.getAvgHitResultModel()
+                                                          .getContinuousHitCount())
                                 .build();
 
     SymphogearResultResponse maxResponse =
@@ -123,9 +126,11 @@ public class SymphogearController {
                                 .investmentYen(result.getMaxHitResultModel().getInvestmentYen())
                                 .collectionBall(result.getMaxHitResultModel().getCollectionBall())
                                 .collectionYen(result.getMaxHitResultModel().getCollectionYen())
-                                .balanceResultYen(result.getMaxHitResultModel().getBalanceResultYen())
+                                .balanceResultYen(result.getMaxHitResultModel()
+                                                        .getBalanceResultYen())
                                 .firstHit(result.getMaxHitResultModel().getFirstHit())
-                                .continuousHitCount(result.getMaxHitResultModel().getContinuousHitCount())
+                                .continuousHitCount(result.getMaxHitResultModel()
+                                                          .getContinuousHitCount())
                                 .build();
 
     SymphogearResultResponse minResponse =
@@ -133,9 +138,11 @@ public class SymphogearController {
                                 .investmentYen(result.getMinHitResultModel().getInvestmentYen())
                                 .collectionBall(result.getMinHitResultModel().getCollectionBall())
                                 .collectionYen(result.getMinHitResultModel().getCollectionYen())
-                                .balanceResultYen(result.getMinHitResultModel().getBalanceResultYen())
+                                .balanceResultYen(result.getMinHitResultModel()
+                                                        .getBalanceResultYen())
                                 .firstHit(result.getMinHitResultModel().getFirstHit())
-                                .continuousHitCount(result.getMinHitResultModel().getContinuousHitCount())
+                                .continuousHitCount(result.getMinHitResultModel()
+                                                          .getContinuousHitCount())
                                 .build();
 
     SymphogearSummaryResultResponse summaryResponse = SymphogearSummaryResultResponse.builder()

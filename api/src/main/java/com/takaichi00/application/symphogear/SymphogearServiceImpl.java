@@ -101,7 +101,8 @@ public class SymphogearServiceImpl implements SymphogearService {
                                                 .mapToDouble(d -> d)
                                                 .average()
                                                 .orElse(0))
-                                             .continuousHitCount((int)continuousHitCountList.stream()
+                                             .continuousHitCount((int)continuousHitCountList
+                                                 .stream()
                                                  .mapToDouble(d -> d)
                                                  .average()
                                                  .orElse(0))
