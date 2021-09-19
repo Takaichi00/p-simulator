@@ -8,11 +8,11 @@ import com.takaichi00.domain.symphogear.FirstHitInformation;
 import com.takaichi00.domain.symphogear.PachinkoPlayerCreator;
 import com.takaichi00.domain.symphogear.PlayerStatus;
 import com.takaichi00.domain.symphogear.SymphogearPlayer;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 @ApplicationScoped
 public class SymphogearServiceImpl implements SymphogearService {

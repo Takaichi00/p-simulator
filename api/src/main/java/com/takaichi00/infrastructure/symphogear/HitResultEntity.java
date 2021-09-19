@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Builder
-public class ResultEntity {
+public class HitResultEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
@@ -26,6 +26,9 @@ public class ResultEntity {
   @Column(name = "p_name")
   private String pName;
 
-  @Column(name = "first_hit")
-  private Integer firstHit;
+  @Column(name = "first_hit_round")
+  private Integer firstHitRound;
+
+  @Column(name = "first_hit_money")
+  private Integer firstHitMoney;
 }

@@ -16,9 +16,10 @@ public class JdbcSymphogearRepository implements SymphogearRepository {
   @Override
   @Transactional
   public void save(int i) {
-    entityManager.persist(ResultEntity.builder()
+    entityManager.persist(HitResultEntity.builder()
                                       .pName("symphogear")
-                                      .firstHit(100)
+                                      .firstHitRound(100)
+                                      .firstHitMoney(10000)
                                       .build());
   }
 }

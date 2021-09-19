@@ -27,8 +27,8 @@ class JdbcSymphogearRepositoryTest {
 
   private static final Operation DELETE_ALL = deleteAllFrom("p_result");
   private static final Operation INSERT_DEFAULT = insertInto("p_result")
-                                                    .columns("id", "p_name", "first_hit")
-                                                    .values("1", "symphogear", 50)
+                                                    .columns("id", "p_name", "first_hit_round", "first_hit_money")
+                                                    .values("1", "symphogear", 50, 1000)
                                                     .build();
   Operation operation = sequenceOf(DELETE_ALL, INSERT_DEFAULT);
 
@@ -39,11 +39,11 @@ class JdbcSymphogearRepositoryTest {
 
     symphogearRepository.save(100);
 
-    TypedQuery<ResultEntity> query
-        = entityManager.createQuery("FROM ResultEntity WHERE id = :id", ResultEntity.class).setParameter("id", 2);
-    ResultEntity actual = query.getSingleResult();
+    TypedQuery<HitResultEntity> query
+        = entityManager.createQuery("FROM HitResultEntity WHERE id = :id", HitResultEntity.class).setParameter("id", 2);
+    HitResultEntity actual = query.getSingleResult();
 
-    assertEquals(100, actual.getFirstHit());
+    assertEquals(100, actual.getFirstHitRound());
 
   }
 }
