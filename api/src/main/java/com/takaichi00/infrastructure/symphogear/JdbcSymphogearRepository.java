@@ -1,7 +1,6 @@
 package com.takaichi00.infrastructure.symphogear;
 
 import com.takaichi00.domain.symphogear.SymphogearRepository;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -17,9 +16,9 @@ public class JdbcSymphogearRepository implements SymphogearRepository {
   @Transactional
   public void save(int i) {
     entityManager.persist(HitResultEntity.builder()
-                                      .pName("symphogear")
-                                      .firstHitRound(100)
-                                      .firstHitMoney(10000)
-                                      .build());
+                                         .pName("symphogear")
+                                         .firstHitRound(100)
+                                         .investmentYen(10000)
+                                         .build());
   }
 }
