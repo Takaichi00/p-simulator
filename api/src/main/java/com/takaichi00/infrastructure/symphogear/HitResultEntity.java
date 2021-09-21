@@ -30,4 +30,8 @@ public class HitResultEntity {
 
   @Column(name = "investment_yen")
   private Integer investmentYen;
+
+  @Column(name = "collection_ball")
+  private Integer collectionBall;
+
 }

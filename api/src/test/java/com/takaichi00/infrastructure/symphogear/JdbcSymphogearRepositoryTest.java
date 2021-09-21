@@ -27,8 +27,8 @@ class JdbcSymphogearRepositoryTest {
 
   private static final Operation DELETE_ALL = deleteAllFrom("p_result");
   private static final Operation INSERT_DEFAULT = insertInto("p_result")
-                                                    .columns("id", "p_name", "first_hit_round", "investment_yen")
-                                                    .values("1", "symphogear", 50, 1000)
+                                                    .columns("id", "p_name", "first_hit_round", "investment_yen", "collection_ball")
+                                                    .values("1", "symphogear", 50, 1000, 3000)
                                                     .build();
   Operation operation = sequenceOf(DELETE_ALL, INSERT_DEFAULT);
 
